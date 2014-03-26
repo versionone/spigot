@@ -1,0 +1,28 @@
+{
+  "name": "Spigot",
+  "version": "0.1.0",
+  "description": "Asset creation tool",
+  "main": "spigot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "spigot": "./bin/spigot"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:versionone/spigot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/versionone/spigot/issues"
+  },
+  "homepage": "https://github.com/versionone/spigot",
+  "dependencies": {
+    "minimist": "0.0.8",
+    "underscore": "^1.6.0",
+    "v1jssdk": "git+ssh://git@github.com:dangilkerson/VersionOne.SDK.Javascript.git",
+    "async": "^0.2.10"
+  }
+}

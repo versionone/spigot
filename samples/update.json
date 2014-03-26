@@ -1,0 +1,13 @@
+{
+    "url": "http://10.0.1.14/versionone.web",
+    "username": "admin",
+    "password": "admin",
+
+    "commands": [{
+        "command": "update",
+        "oid": "Story:1005",
+        "attributes": {
+            "Name": "Renamed Story"
+        }
+    }]
+}

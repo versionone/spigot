@@ -1,0 +1,14 @@
+{
+    "url": "http://10.0.1.14/versionone.web",
+    "username": "admin",
+    "password": "admin",
+
+    "commands": [{
+        "command": "create",
+        "assetType": "Story",
+        "attributes": {
+            "Name": "Story 1",
+            "Scope": "Scope:0"
+        }
+    }]
+}

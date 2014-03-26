@@ -1,0 +1,14 @@
+#!/usr/bin/env node
+
+var argv = require('minimist')(process.argv.slice(2));
+var CommandProcessor = new require("../lib/command-processor.js");
+
+if(argv._.length == 0) {
+  console.log("Requires a data file");
+  return;
+}
+
+var data = require(process.cwd() + "/" + argv._[0]);
+var commandProcessor = new CommandProcessor(data.url, data.username, data.password);
+
+commandProcessor.executeParallel(data.commands);
