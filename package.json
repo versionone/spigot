@@ -24,6 +24,7 @@
     "underscore": "^1.6.0",
     "v1jssdk": "git+ssh://git@github.com:dangilkerson/VersionOne.SDK.Javascript.git",
     "async": "^0.2.10",
-    "nopt": "^2.2.0"
+    "nopt": "^2.2.0",
+    "timetrickle": "^0.1.1"
   }
 }

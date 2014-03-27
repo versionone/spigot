@@ -6,7 +6,8 @@ var knownOpts = {
   "parallel" : Boolean,
   "username" : String,
   "password" : String,
-  "url" : String
+  "url" : String,
+  "thottle" : Number
 };
 
 var shortHands = {
@@ -24,7 +25,14 @@ if(parsed.argv.remain.length == 0) {
 }
 
 var data = require(process.cwd() + "/" + parsed.argv.remain[0]);
-var commandProcessor = new CommandProcessor(parsed.url, parsed.username, parsed.password);
+var commandProcessor = new CommandProcessor({
+  url: parsed.url,
+  username: parsed.username,
+  password: parsed.password,
+  throttle: parsed.throttle
+});
+
+
 
 if(parsed.parallel) {
   console.log('Executing in a parallel');
