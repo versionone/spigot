@@ -39,6 +39,6 @@ if(parsed.parallel) {
   commandProcessor.executeParallel(data);
 }
 else {
-  console.log('Executing in a series');
+  console.log('Executing in sequence');
   commandProcessor.executeSeries(data);
 }
