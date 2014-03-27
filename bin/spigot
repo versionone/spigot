@@ -1,14 +1,27 @@
 #!/usr/bin/env node
 
-var argv = require('minimist')(process.argv.slice(2));
+var nopt = require("nopt")
+var path = require("path")
+var knownOpts = { "parallel" : Boolean }
+var shortHands = { "p" : ["--parallel"] }
+
+var parsed = nopt(knownOpts, shortHands, process.argv, 2)
+
 var CommandProcessor = new require("../lib/command-processor.js");
 
-if(argv._.length == 0) {
+if(parsed.argv.remain.length == 0) {
   console.log("Requires a data file");
   return;
 }
 
-var data = require(process.cwd() + "/" + argv._[0]);
+var data = require(process.cwd() + "/" + parsed.argv.remain[0]);
 var commandProcessor = new CommandProcessor(data.url, data.username, data.password);
 
-commandProcessor.executeParallel(data.commands);
+if(parsed.parallel) {
+  console.log('Executing in a parallel');
+  commandProcessor.executeParallel(data.commands);
+}
+else {
+  console.log('Executing in a series');
+  commandProcessor.executeSeries(data.commands);
+}

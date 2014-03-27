@@ -23,6 +23,7 @@
     "minimist": "0.0.8",
     "underscore": "^1.6.0",
     "v1jssdk": "git+ssh://git@github.com:dangilkerson/VersionOne.SDK.Javascript.git",
-    "async": "^0.2.10"
+    "async": "^0.2.10",
+    "nopt": "^2.2.0"
   }
 }
