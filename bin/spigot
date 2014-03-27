@@ -2,8 +2,17 @@
 
 var nopt = require("nopt")
 var path = require("path")
-var knownOpts = { "parallel" : Boolean }
-var shortHands = { "p" : ["--parallel"] }
+var knownOpts = {
+  "parallel" : Boolean,
+  "username" : String,
+  "password" : String,
+  "url" : String
+};
+
+var shortHands = {
+  "u" : ["--username"],
+  "p": ["--password"]
+}
 
 var parsed = nopt(knownOpts, shortHands, process.argv, 2)
 
@@ -15,7 +24,7 @@ if(parsed.argv.remain.length == 0) {
 }
 
 var data = require(process.cwd() + "/" + parsed.argv.remain[0]);
-var commandProcessor = new CommandProcessor();
+var commandProcessor = new CommandProcessor(parsed.url, parsed.username, parsed.password);
 
 if(parsed.parallel) {
   console.log('Executing in a parallel');
