@@ -15,13 +15,13 @@ if(parsed.argv.remain.length == 0) {
 }
 
 var data = require(process.cwd() + "/" + parsed.argv.remain[0]);
-var commandProcessor = new CommandProcessor(data.url, data.username, data.password);
+var commandProcessor = new CommandProcessor();
 
 if(parsed.parallel) {
   console.log('Executing in a parallel');
-  commandProcessor.executeParallel(data.commands);
+  commandProcessor.executeParallel(data);
 }
 else {
   console.log('Executing in a series');
-  commandProcessor.executeSeries(data.commands);
+  commandProcessor.executeSeries(data);
 }
