@@ -1,0 +1,52 @@
+{
+    "url": "http://localhost/versionone.web",
+    "username": "admin",
+    "password": "admin",
+
+    "commands": [{
+        "command": "create",
+        "assetType": "Story",
+        "attributes": {
+            "Name": "Story 1",
+            "Scope": "Scope:0"
+        }
+    }, {
+        "command": "create",
+        "assetType": "Task",
+        "attributes": {
+            "Name": "Task 1",
+            "Parent": "{{story}}"
+        }
+    },
+    {
+        "command": "create",
+        "assetType": "Task",
+        "attributes": {
+            "Name": "Task 2",
+            "Parent": "{{story}}"
+        }
+    },
+    {
+        "command": "create",
+        "assetType": "Story",
+        "attributes": {
+            "Name": "Story 2",
+            "Scope": "Scope:0"
+        }
+    }, {
+        "command": "create",
+        "assetType": "Task",
+        "attributes": {
+            "Name": "Task A",
+            "Parent": "{{story}}"
+        }
+    },
+    {
+        "command": "create",
+        "assetType": "Task",
+        "attributes": {
+            "Name": "Task B",
+            "Parent": "{{story}}"
+        }
+    }]
+}
