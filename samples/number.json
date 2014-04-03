@@ -1,0 +1,63 @@
+{
+    "username": "admin",
+    "password": "admin",
+
+    "commands": [
+        {
+            "command": "create",
+            "assetType": "Story",
+            "attributes": {
+                "Name": "Story {{number}}",
+                "Scope": "Scope:0"
+            }
+        },
+        {
+            "command": "create",
+            "assetType": "Story",
+            "attributes": {
+                "Name": "Story {{number}}",
+                "Scope": "Scope:0"
+            }
+        },
+        {
+            "command": "create",
+            "assetType": "Story",
+            "attributes": {
+                "Name": "Story {{number}}",
+                "Scope": "Scope:0"
+            }
+        },
+        {
+            "command": "create",
+            "assetType": "Story",
+            "attributes": {
+                "Name": "Story {{number}}",
+                "Scope": "Scope:0"
+            }
+        },
+        {
+            "command": "create",
+            "assetType": "Story",
+            "attributes": {
+                "Name": "Story {{number}}",
+                "Scope": "Scope:0"
+            }
+        },
+        {
+            "command": "create",
+            "assetType": "Story",
+            "attributes": {
+                "Name": "Story {{number}}",
+                "Scope": "Scope:0"
+            }
+        },
+        {
+            "command": "create",
+            "assetType": "Story",
+            "attributes": {
+                "Name": "Story {{number}}",
+                "Scope": "Scope:0"
+            }
+        }
+    ]
+}
