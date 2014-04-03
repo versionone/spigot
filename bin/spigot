@@ -3,42 +3,43 @@
 var nopt = require("nopt")
 var path = require("path")
 var knownOpts = {
-  "parallel" : Boolean,
-  "username" : String,
-  "password" : String,
-  "url" : String,
-  "thottle" : Number
+    "parallel": Boolean,
+    "username": String,
+    "password": String,
+    "url": String,
+    "thottle": Number,
+    "forever": Boolean
 };
 
 var shortHands = {
-  "u" : ["--username"],
-  "p": ["--password"]
+    "u": ["--username"],
+    "p": ["--password"]
 }
 
 var parsed = nopt(knownOpts, shortHands, process.argv, 2)
 
 var CommandProcessor = new require("../lib/command-processor.js");
 
-if(parsed.argv.remain.length == 0) {
-  console.log("Requires a data file");
-  return;
+if (parsed.argv.remain.length == 0) {
+    console.log("Requires a data file");
+    return;
 }
 
 var data = require(process.cwd() + "/" + parsed.argv.remain[0]);
 var commandProcessor = new CommandProcessor({
-  url: parsed.url,
-  username: parsed.username,
-  password: parsed.password,
-  throttle: parsed.throttle
+    url: parsed.url,
+    username: parsed.username,
+    password: parsed.password,
+    throttle: parsed.throttle,
+    forever: parsed.forever
 });
 
 
-
-if(parsed.parallel) {
-  console.log('Executing in a parallel');
-  commandProcessor.executeParallel(data);
+if (parsed.parallel) {
+    console.log('Executing in a parallel');
+    commandProcessor.executeParallel(data);
 }
 else {
-  console.log('Executing in sequence');
-  commandProcessor.executeSeries(data);
+    console.log('Executing in sequence');
+    commandProcessor.executeSeries(data);
 }
