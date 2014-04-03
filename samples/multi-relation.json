@@ -1,0 +1,33 @@
+{
+    "username": "admin",
+    "password": "admin",
+
+    "commands": [
+        {
+            "command": "create",
+            "assetType": "Story",
+            "attributes": {
+                "Name": "Story with owners",
+                "Scope": "Scope:0"
+            }
+        },
+        {
+            "command": "update",
+            "oid": "{{story}}",
+            "attributes": {
+                "Owners":{
+                    "add": ["Member:20", "Member:1133", "Member:1134"]
+                }
+            }
+        },
+        {
+            "command": "update",
+            "oid": "{{story}}",
+            "attributes": {
+                "Owners":{
+                    "remove": ["Member:1133"]
+                }
+            }
+        }
+    ]
+}
