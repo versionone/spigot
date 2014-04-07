@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 
-var nopt = require("nopt")
-var path = require("path")
+var nopt = require("nopt");
+var path = require("path");
+var _ = require('underscore');
+
 var knownOpts = {
     "parallel": Boolean,
     "username": String,
@@ -25,7 +27,10 @@ if (parsed.argv.remain.length == 0) {
     return;
 }
 
-var data = require(process.cwd() + "/" + parsed.argv.remain[0]);
+var data = _.flatten(_.map(parsed.argv.remain, function(f){
+    return require(process.cwd() + "/" + f);
+}));
+
 var commandProcessor = new CommandProcessor({
     url: parsed.url,
     username: parsed.username,
@@ -33,7 +38,6 @@ var commandProcessor = new CommandProcessor({
     throttle: parsed.throttle,
     forever: parsed.forever
 });
-
 
 if (parsed.parallel) {
     console.log('Executing in a parallel');
