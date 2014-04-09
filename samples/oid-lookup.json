@@ -14,7 +14,7 @@
         "assetType": "Task",
         "attributes": {
             "Name": "Task 1",
-            "Parent": "{{story}}"
+            "Parent": "{{Story}}"
         }
     },
     {
@@ -22,7 +22,7 @@
         "assetType": "Task",
         "attributes": {
             "Name": "Task 2",
-            "Parent": "{{story}}"
+            "Parent": "{{Story}}"
         }
     },
     {
@@ -37,7 +37,7 @@
         "assetType": "Task",
         "attributes": {
             "Name": "Task A",
-            "Parent": "{{story}}"
+            "Parent": "{{Story}}"
         }
     },
     {
@@ -45,7 +45,7 @@
         "assetType": "Task",
         "attributes": {
             "Name": "Task B",
-            "Parent": "{{story}}"
+            "Parent": "{{Story}}"
         }
     }]
 }

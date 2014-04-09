@@ -6,7 +6,7 @@
         "command": "create",
         "assetType": "Story",
         "attributes": {
-            "Name": "Story {{number}}",
+            "Name": "Story 1",
             "Scope": "Scope:0"
         }
     }]
