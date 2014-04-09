@@ -36,11 +36,13 @@ Local clone
 
 ## Options
 ```sh
-spigot --url <url> --username <username> --password <password> --forever [spigot files]
+spigot --url <url> --username <username> --password <password> --throttle <events per second> --forever --parallel [spigot files]
 ```
 - `--url` Url to VersionOne
 - `--username` Username
 - `--password` Password
+- `--throttle` Number of events per second
+- `--parallel` Run commands in parallel
 - `--forever` Repeat spigot infinitely
 - `[spigot files]` A list of spigot json files
 

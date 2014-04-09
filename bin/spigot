@@ -9,7 +9,7 @@ var knownOpts = {
     "username": String,
     "password": String,
     "url": String,
-    "thottle": Number,
+    "throttle": Number,
     "forever": Boolean
 };
 
