@@ -1,0 +1,13 @@
+{
+    "commands": [{
+        "command": "create",
+        "assetType": "Scope",
+        "attributes": {
+            "Name": "SCOPE {{number}}",
+            "Parent": "Scope:0",
+            "BeginDate": "1/1/2014",
+            "Scheme": "Scheme:1001"
+        }
+    }
+    ]
+}
