@@ -27,3 +27,36 @@ spigot --url <url> --username <username> --password <password> [spigot files]
 ```
 
 ## Updating an asset
+```json
+{
+    "commands": [{
+        "command": "update",
+        "oid": "Story:1005",
+        "attributes": {
+            "Name": "Renamed Story"
+        }
+    }]
+}
+```
+## Referencing a previous oid
+Use {{<assettype>}} example: {{Story}} or {{Task}}
+```json
+{
+    "commands": [{
+        "command": "create",
+        "assetType": "Story",
+        "attributes": {
+            "Name": "Story 1",
+            "Scope": "Scope:0"
+        }
+    }, {
+        "command": "create",
+        "assetType": "Task",
+        "attributes": {
+            "Name": "Task 1",
+            "Parent": "{{Story}}"
+        }
+    },
+}
+
+```
