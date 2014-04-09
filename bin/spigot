@@ -28,7 +28,7 @@ if (parsed.argv.remain.length == 0) {
 }
 
 var data = _.flatten(_.map(parsed.argv.remain, function(f){
-    return require(process.cwd() + "/" + f);
+    return require(path.resolve(process.cwd(), f));
 }));
 
 var commandProcessor = new CommandProcessor({
