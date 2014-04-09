@@ -13,7 +13,7 @@
         },
         {
             "command": "update",
-            "oid": "{{story}}",
+            "oid": "{{Story}}",
             "attributes": {
                 "Owners":{
                     "add": ["Member:20", "Member:1133", "Member:1134"]
@@ -22,7 +22,7 @@
         },
         {
             "command": "update",
-            "oid": "{{story}}",
+            "oid": "{{Story}}",
             "attributes": {
                 "Owners":{
                     "remove": ["Member:1133"]
