@@ -1,18 +1,51 @@
 # Spigot
 
-[TOC]
+- [Install](#install)
+- [Running](#running)
+- [Options](#options)
+- [Interact with VersionOne](#interact-with-versionone)
+	- [Creating an Asset](#creating-an-asset)
+	- [Updating an Asset](#updating-an-asset)
+	- [Updating a multi relation](#updating-a-multi-relation)
+	- [Referencing an oid](#referencing-an-oid)
+	- [Executing an Operation](#executing-an-operation)
+- [Additional](#additional)
+  - [Url](#url)
+  - [Username/Password](#username/password)
+  - [Array of commands](#array-of-commands)
 
 ## Install
+Global install
 ```sh
 npm install -g git+ssh://git@github.com:versionone/spigot.git
+```
+Cloning
+```sh
+git clone git@github.com:versionone/spigot.git
+```
+
+## Running
+Globally installed
+```sh
+spigot
+```
+Local clone
+```sh
+./bin/spigot
 ```
 
 ## Options
 ```sh
-spigot --url <url> --username <username> --password <password> [spigot files]
+spigot --url <url> --username <username> --password <password> --forever [spigot files]
 ```
+- `--url` Url to VersionOne
+- `--username` Username
+- `--password` Password
+- `--forever` Repeat spigot infinitely
+- `[spigot files]` A list of spigot json files
 
-## Creating an asset
+## Interact with VersionOne
+### Creating an asset
 ```json
 {
     "commands": [{
@@ -26,7 +59,7 @@ spigot --url <url> --username <username> --password <password> [spigot files]
 }
 ```
 
-## Updating an asset
+### Updating an asset
 ```json
 {
     "commands": [{
@@ -38,8 +71,43 @@ spigot --url <url> --username <username> --password <password> [spigot files]
     }]
 }
 ```
-## Referencing a previous oid
-Use {{<assettype>}} example: {{Story}} or {{Task}}
+
+### Updating a multi relation
+```json
+{
+    "commands": [
+        {
+            "command": "create",
+            "assetType": "Story",
+            "attributes": {
+                "Name": "Story with owners",
+                "Scope": "Scope:0"
+            }
+        },
+        {
+            "command": "update",
+            "oid": "{{Story}}",
+            "attributes": {
+                "Owners":{
+                    "add": ["Member:20", "Member:1133", "Member:1134"]
+                }
+            }
+        },
+        {
+            "command": "update",
+            "oid": "{{Story}}",
+            "attributes": {
+                "Owners":{
+                    "remove": ["Member:1133"]
+                }
+            }
+        }
+    ]
+}
+```
+
+### Referencing an oid
+Use {{`<assettype>`}} example: {{Story}} or {{Task}}
 ```json
 {
     "commands": [{
@@ -58,5 +126,102 @@ Use {{<assettype>}} example: {{Story}} or {{Task}}
         }
     },
 }
+```
 
+### Executing an Operation
+```json
+{
+    "commands": [{
+        "command": "execute",
+        "oid": "Story:1005",
+        "operation": "Inactivate"
+    }]
+}
+```
+
+## Additional
+### Url
+Override the defaults url
+```json
+{
+	"url": "http://<versionone>",
+	"commands":[]
+}
+```
+
+### Username/Password
+Overrides the default username and password. This can be useful for simulating multiple users.
+```json
+{
+	"username": "admin",
+	"password": "password",
+	"commands":[]
+}
+```
+
+### Incrementing Number
+Supply an incrementing number in strings
+```json
+{
+    "username": "admin",
+    "password": "admin",
+
+    "commands": [
+        {
+            "command": "create",
+            "assetType": "Story",
+            "attributes": {
+                "Name": "Story {{number}}",
+                "Scope": "Scope:0"
+            }
+        },
+        {
+            "command": "create",
+            "assetType": "Story",
+            "attributes": {
+                "Name": "Story {{number}}",
+                "Scope": "Scope:0"
+            }
+        }
+	]
+}
+```
+
+### Array of commands
+Multiple command sets can be supplied by multiple files. Using a single file use the following format
+```json
+[{
+    "username": "admin",
+    "password": "admin",
+    "commands": [{
+        "command": "create",
+        "assetType": "Story",
+        "attributes": {
+            "Name": "Story 1",
+            "Scope": "Scope:0"
+        }
+    }]
+}, {
+    "username": "bob",
+    "password": "bob",
+    "commands": [{
+        "command": "create",
+        "assetType": "Story",
+        "attributes": {
+            "Name": "Story 1",
+            "Scope": "Scope:0"
+        }
+    }]
+}, {
+    "username": "jennifer",
+    "password": "jennifer",
+    "commands": [{
+        "command": "create",
+        "assetType": "Story",
+        "attributes": {
+            "Name": "Story 1",
+            "Scope": "Scope:0"
+        }
+    }]
+}]
 ```
