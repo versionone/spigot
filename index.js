@@ -4,11 +4,12 @@
     var node = require('when/node');
     var sequence = require('when/sequence');
     var parallel = require('when/parallel');
-    var V1 = require('./v1');
+    var V1 = require('./lib/v1');
     var trickle = require('timetrickle');
     var Mustache = require('mustache');
 
-    var CommandProcessor = function(config) {
+    var Spigot = function(config) {
+        var spigot = this;
         this.url = config.url;
         this.username = config.username;
         this.password = config.password;
@@ -28,7 +29,10 @@
             create: function(v1, command, callback) {
                 var assetType = command.assetType;
                 var attributes = command.attributes;
-                v1.create(assetType, attributes, callback);
+                v1.create(assetType, attributes, function(err, asset) {
+                    spigot.createdOids.push(asset.oid);
+                    callback(err, asset);
+                });
             },
             update: function(v1, command, callback) {
                 var oid = command.oid;
@@ -42,34 +46,34 @@
             }
         };
 
-        throttle = function(func){
-          func();
+        throttle = function(func) {
+            func();
         };
 
-        if(config.throttle) {
-          throttle = trickle(config.throttle, 1000);
+        if (config.throttle) {
+            throttle = trickle(config.throttle, 1000);
         }
 
         this.execute = function(self, v1, command, callback) {
-            throttle(function(){
+            throttle(function() {
                 var a = JSON.stringify(command);
                 var b = Mustache.render(a, self.streamVariables);
                 var c = JSON.parse(b);
                 console.log(c);
-              self.commands[c.command](v1, c, function(err, asset) {
-                if(err) {
-                    console.log(err);
-                    return callback(err);
-                }
-                if(asset&&asset.assetType)
-                    self.streamVariables[asset.assetType] = asset.oid;
-                callback(err, asset);
-              });
+                self.commands[c.command](v1, c, function(err, asset) {
+                    if (err) {
+                        console.log(err);
+                        return callback(err);
+                    }
+                    if (asset && asset.assetType)
+                        self.streamVariables[asset.assetType] = asset.oid;
+                    callback(err, asset);
+                });
             });
         };
     };
 
-    CommandProcessor.prototype.startRateWatcher = function(totalCommands) {
+    Spigot.prototype.startRateWatcher = function(totalCommands) {
         var self = this;
         self.startTime = +Date.now();
         self.lastTotalSent = 0;
@@ -91,7 +95,7 @@
         }, 1000);
     };
 
-    CommandProcessor.prototype.wrapForExecution = function(data) {
+    Spigot.prototype.wrapForExecution = function(data) {
         var self = this;
         var url = data.url || this.url;
         var username = data.username || this.username;
@@ -101,7 +105,7 @@
             return function() {
                 var v1 = new V1(url, username, password);
                 var promiseExecute = node.call(self.execute, self, v1, command);
-                promiseExecute.done(function(){
+                promiseExecute.done(function() {
                     ++self.totalSent;
                 });
                 return promiseExecute;
@@ -111,34 +115,30 @@
         return when.all(executableCommands);
     };
 
-    CommandProcessor.prototype.report = function(err, results) {
-        if (err) {
-            console.log("Error:", err)
-        }
-    }
-
-    CommandProcessor.prototype.executeSeries = function(data) {
-        this.executeBatch(data, sequence);
+    Spigot.prototype.executeSeries = function(data, callback) {
+        this.executeBatch(data, sequence, callback);
     };
 
-    CommandProcessor.prototype.executeParallel = function(data) {
-        this.executeBatch(data, parallel);
+    Spigot.prototype.executeParallel = function(data, callback) {
+        this.executeBatch(data, parallel, callback);
     };
 
-    CommandProcessor.prototype.executeBatch = function(data, method) {
+    Spigot.prototype.executeBatch = function(data, method, callback) {
         var self = this;
         var once = true;
 
-        when.iterate(function(){
+        self.createdOids = [];
+
+        when.iterate(function() {
             var executions;
-            if (_.isArray(data))
-                executions = when.all(_.map(data, function(d) {
-                    return method(self.wrapForExecution(d), self.report);
-                }));
-            else {
-                self.startRateWatcher(data.commands.length);
-                executions = method(self.wrapForExecution(data), self.report);
-            }
+            var payload = data;
+
+            if (!_.isArray(payload))
+                payload = [payload];
+
+            executions = when.all(_.map(payload, function(d) {
+                return method(self.wrapForExecution(d));
+            }));
 
             return executions;
         }, function() {
@@ -146,8 +146,11 @@
         }, function(x) {
             once = false;
             return x;
-        }, 0).done();
+        }, 0).done(function(x) {
+            if(callback)
+                callback(null, self.createdOids);
+        });
     };
 
-    module.exports = CommandProcessor;
+    module.exports = Spigot;
 })();

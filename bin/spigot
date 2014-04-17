@@ -20,18 +20,18 @@ var shortHands = {
 
 var parsed = nopt(knownOpts, shortHands, process.argv, 2)
 
-var CommandProcessor = new require("../lib/command-processor.js");
+var Spigot = new require("../index.js");
 
 if (parsed.argv.remain.length == 0) {
     console.log("Requires a data file");
     return;
 }
 
-var data = _.flatten(_.map(parsed.argv.remain, function(f){
+var data = _.flatten(_.map(parsed.argv.remain, function(f) {
     return require(path.resolve(process.cwd(), f));
 }));
 
-var commandProcessor = new CommandProcessor({
+var spigot = new Spigot({
     url: parsed.url,
     username: parsed.username,
     password: parsed.password,
@@ -41,9 +41,9 @@ var commandProcessor = new CommandProcessor({
 
 if (parsed.parallel) {
     console.log('Executing in a parallel');
-    commandProcessor.executeParallel(data);
+    spigot.executeParallel(data);
 }
 else {
     console.log('Executing in sequence');
-    commandProcessor.executeSeries(data);
+    spigot.executeSeries(data);
 }
