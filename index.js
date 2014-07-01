@@ -51,7 +51,7 @@
         };
 
         if (config.throttle) {
-            throttle = trickle(config.throttle, 1000);
+            throttle = trickle(config.throttle, config.throttleInterval || 1000);
         }
 
         this.execute = function(self, v1, command, callback) {

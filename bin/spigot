@@ -10,6 +10,7 @@ var knownOpts = {
     "password": String,
     "url": String,
     "throttle": Number,
+    "throttleinterval": Number,
     "forever": Boolean
 };
 
@@ -36,6 +37,7 @@ var spigot = new Spigot({
     username: parsed.username,
     password: parsed.password,
     throttle: parsed.throttle,
+    throttleInterval: parsed.throttleinterval,
     forever: parsed.forever
 });
 
