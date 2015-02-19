@@ -17,54 +17,54 @@
             "assetType": "Grant",
             "attributes": {
                 "Application": "{{Application}}",
-                "Category": "Token",
+                "Category": "TOKN",
                 "Owner": "Member:20",
-                "Token": "1.CathyAppAdmin6=" 
+                "TOKN": "1.CathyAppAdmin6=" 
             }
     },{
         "command": "create",
             "assetType": "Grant",
             "attributes": {
-                "Category": "Token",
+                "Category": "TOKN",
                 "Application": "{{Application}}",
                 "Owner": "Member:1063",
-                "Token": "1.CathyAppAndre6=" 
+                "TOKN": "1.CathyAppAndre6=" 
             }
     },{
         "command": "create",
             "assetType": "Grant",
             "attributes": {
-                "Category": "Token",
+                "Category": "TOKN",
                 "Application": "{{Application}}",
                 "Owner": "Member:1064",
-                "Token": "1.CathyAppAlfred6="
+                "TOKN": "1.CathyAppAlfred6="
             }
     },{
         "command": "create",
             "assetType": "Grant",
             "attributes": {
-                "Category": "Token",
+                "Category": "TOKN",
                 "Application": "{{Application}}",
                 "Owner": "Member:1065",
-                "Token": "1.CathyAppTammy6=" 
+                "TOKN": "1.CathyAppTammy6=" 
             }
     },{
         "command": "create",
             "assetType": "Grant",
             "attributes": {
-                "Category": "Token",
+                "Category": "TOKN",
                 "Application": "{{Application}}",
                 "Owner": "Member:1078",
-                "Token": "1.CathyAppRonnie6=" 
+                "TOKN": "1.CathyAppRonnie6=" 
             }
     },{
         "command": "create",
             "assetType": "Grant",
             "attributes": {
-                "Category": "Token",
+                "Category": "TOKN",
                 "Application": "{{Application}}",
                 "Owner": "Member:1069",
-                "Token": "1.CathyAppWilly6=" 
+                "TOKN": "1.CathyAppWilly6=" 
             }
     },{
         "command": "execute",
@@ -84,28 +84,28 @@
         "command": "create",
             "assetType": "Grant",
             "attributes": {
-                "Category": "Token",
+                "Category": "TOKN",
                 "Application": "{{Application}}",
                 "Owner": "Member:1063",
-                "Token": "1.CathyAppAndre9=" 
+                "TOKN": "1.CathyAppAndre9=" 
             }
     },{
         "command": "create",
             "assetType": "Grant",
             "attributes": {
-                "Category": "Token",
+                "Category": "TOKN",
                 "Application": "{{Application}}",
                 "Owner": "Member:1064",
-                "Token": "1.CathyAppAlfred9="
+                "TOKN": "1.CathyAppAlfred9="
             }
     },{
         "command": "create",
             "assetType": "Grant",
             "attributes": {
-                "Category": "Token",
+                "Category": "TOKN",
                 "Application": "{{Application}}",
                 "Owner": "Member:1065",
-                "Token": "1.CathyAppTammy9=" 
+                "TOKN": "1.CathyAppTammy9=" 
             }
     },{
         "command": "execute",
@@ -125,10 +125,10 @@
         "command": "create",
             "assetType": "Grant",
             "attributes": {
-                "Category": "Token",
+                "Category": "TOKN",
                 "Application": "{{Application}}",
                 "Owner": "Member:1063",
-                "Token": "1.AndrePersonal6=" 
+                "TOKN": "1.AndrePersonal6=" 
             }
     },{
         "command": "execute",
@@ -139,10 +139,10 @@
         "command": "create",
             "assetType": "Grant",
             "attributes": {
-                "Category": "Token",
+                "Category": "TOKN",
                 "Application": "{{Application}}",
                 "Owner": "Member:20",
-                "Token": "1.AdminGrant6=" 
+                "TOKN": "1.AdminGrant6=" 
             }
     },{
         "command": "create",
@@ -157,10 +157,10 @@
         "command": "create",
             "assetType": "Grant",
             "attributes": {
-                "Category": "Token",
+                "Category": "TOKN",
                 "Application": "{{Application}}",
                 "Owner": "Member:1065",
-                "Token": "1.TammyPersonal6=" 
+                "TOKN": "1.TammyPersonal6=" 
             }
     },{
         "command": "create",
@@ -175,10 +175,10 @@
         "command": "create",
             "assetType": "Grant",
             "attributes": {
-                "Category": "Token",
+                "Category": "TOKN",
                 "Application": "{{Application}}",
                 "Owner": "Member:1064",
-                "Token": "1.AlfredPersonal6=" 
+                "TOKN": "1.AlfredPersonal6=" 
             }
     },{
         "command": "create",
@@ -194,54 +194,54 @@
             "assetType": "Grant",
             "attributes": {
                 "Application": "{{Application}}",
-                "Category": "Token",
+                "Category": "TOKN",
                 "Owner": "Member:20",
-                "Token": "1.CathyAppAdmin0=" 
+                "TOKN": "1.CathyAppAdmin0=" 
             }
     },{
         "command": "create",
             "assetType": "Grant",
             "attributes": {
-                "Category": "Token",
+                "Category": "TOKN",
                 "Application": "{{Application}}",
                 "Owner": "Member:1063",
-                "Token": "1.CathyAppAndre0=" 
+                "TOKN": "1.CathyAppAndre0=" 
             }
     },{
         "command": "create",
             "assetType": "Grant",
             "attributes": {
-                "Category": "Token",
+                "Category": "TOKN",
                 "Application": "{{Application}}",
                 "Owner": "Member:1064",
-                "Token": "1.CathyAppAlfred0="
+                "TOKN": "1.CathyAppAlfred0="
             }
     },{
         "command": "create",
             "assetType": "Grant",
             "attributes": {
-                "Category": "Token",
+                "Category": "TOKN",
                 "Application": "{{Application}}",
                 "Owner": "Member:1065",
-                "Token": "1.CathyAppTammy0=" 
+                "TOKN": "1.CathyAppTammy0=" 
             }
     },{
         "command": "create",
             "assetType": "Grant",
             "attributes": {
-                "Category": "Token",
+                "Category": "TOKN",
                 "Application": "{{Application}}",
                 "Owner": "Member:1078",
-                "Token": "1.CathyAppRonnie0=" 
+                "TOKN": "1.CathyAppRonnie0=" 
             }
     },{
         "command": "create",
             "assetType": "Grant",
             "attributes": {
-                "Category": "Token",
+                "Category": "TOKN",
                 "Application": "{{Application}}",
                 "Owner": "Member:1069",
-                "Token": "1.CathyAppWilly0=" 
+                "TOKN": "1.CathyAppWilly0=" 
             }
     }]
 }
