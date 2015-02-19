@@ -1,0 +1,650 @@
+{
+    "username": "admin",
+    "password": "admin",
+
+    "commands": [
+  {
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.AdminGrant{{number}}=",
+                "Owner": "Member:20",
+                "Token": "1.AdminGrant{{number}}=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.AndreGrant{{number}}=",
+                "Owner": "Member:1063",
+                "Token": "1.AndreGrant{{number}}=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.AlfredGrant{{number}}=",
+                "Owner": "Member:1064",
+                "Token": "1.AlfredGrant{{number}}="
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.TammyGrant{{number}}=",
+                "Owner": "Member:1065",
+                "Token": "1.TammyGrant{{number}}=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.RonnieGrant{{number}}=",
+                "Owner": "Member:1078",
+                "Token": "1.RonnieGrant{{number}}=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+
+                "Name": "1.WillyGrant{{number}}=",
+                "Owner": "Member:1069",
+                "Token": "1.WillyGrant{{number}}=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.AdminGrant{{number}}=",
+                "Owner": "Member:20",
+                "Token": "1.AdminGrant{{number}}=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.AndreGrant{{number}}=",
+                "Owner": "Member:1063",
+                "Token": "1.AndreGrant{{number}}=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.AlfredGrant{{number}}=",
+                "Owner": "Member:1064",
+                "Token": "1.AlfredGrant{{number}}="
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.TammyGrant{{number}}=",
+                "Owner": "Member:1065",
+                "Token": "1.TammyGrant{{number}}=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.RonnieGrant{{number}}=",
+                "Owner": "Member:1078",
+                "Token": "1.RonnieGrant{{number}}=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+
+                "Name": "1.WillyGrant{{number}}=",
+                "Owner": "Member:1069",
+                "Token": "1.WillyGrant{{number}}=" 
+            }
+    },{
+        "command": "execute",
+        "assetType": "Grant",
+        "oid": "{{Grant}}",
+        "operation": "Revoke"
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.AdminGrant{{number}}=",
+                "Owner": "Member:20",
+                "Token": "1.AdminGrant{{number}}=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.AndreGrant{{number}}=",
+                "Owner": "Member:1063",
+                "Token": "1.AndreGrant{{number}}=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.AlfredGrant{{number}}=",
+                "Owner": "Member:1064",
+                "Token": "1.AlfredGrant{{number}}="
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.TammyGrant{{number}}=",
+                "Owner": "Member:1065",
+                "Token": "1.TammyGrant{{number}}=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.RonnieGrant{{number}}=",
+                "Owner": "Member:1078",
+                "Token": "1.RonnieGrant{{number}}=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+
+                "Name": "1.WillyGrant{{number}}=",
+                "Owner": "Member:1069",
+                "Token": "1.WillyGrant{{number}}=" 
+            }
+    },{
+        "command": "execute",
+        "assetType": "Grant",
+        "oid": "{{Grant}}",
+        "operation": "Revoke"
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.AdminGrant{{number}}=",
+                "Owner": "Member:20",
+                "Token": "1.AdminGrant{{number}}=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.AndreGrant{{number}}=",
+                "Owner": "Member:1063",
+                "Token": "1.AndreGrant{{number}}=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.AlfredGrant{{number}}=",
+                "Owner": "Member:1064",
+                "Token": "1.AlfredGrant{{number}}="
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.TammyGrant{{number}}=",
+                "Owner": "Member:1065",
+                "Token": "1.TammyGrant{{number}}=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.RonnieGrant{{number}}=",
+                "Owner": "Member:1078",
+                "Token": "1.RonnieGrant{{number}}=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+
+                "Name": "1.WillyGrant{{number}}=",
+                "Owner": "Member:1069",
+                "Token": "1.WillyGrant{{number}}=" 
+            }
+    },{
+        "command": "execute",
+        "assetType": "Grant",
+        "oid": "{{Grant}}",
+        "operation": "Revoke"
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.AdminGrant{{number}}=",
+                "Owner": "Member:20",
+                "Token": "1.AdminGrant{{number}}=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.AndreGrant{{number}}=",
+                "Owner": "Member:1063",
+                "Token": "1.AndreGrant{{number}}=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.AlfredGrant{{number}}=",
+                "Owner": "Member:1064",
+                "Token": "1.AlfredGrant{{number}}="
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.TammyGrant{{number}}=",
+                "Owner": "Member:1065",
+                "Token": "1.TammyGrant{{number}}=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.RonnieGrant{{number}}=",
+                "Owner": "Member:1078",
+                "Token": "1.RonnieGrant{{number}}=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+
+                "Name": "1.WillyGrant{{number}}=",
+                "Owner": "Member:1069",
+                "Token": "1.WillyGrant{{number}}=" 
+            }
+    },{
+        "command": "execute",
+        "assetType": "Grant",
+        "oid": "{{Grant}}",
+        "operation": "Revoke"
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.AdminGrant{{number}}=",
+                "Owner": "Member:20",
+                "Token": "1.AdminGrant{{number}}=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.AndreGrant{{number}}=",
+                "Owner": "Member:1063",
+                "Token": "1.AndreGrant{{number}}=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.AlfredGrant{{number}}=",
+                "Owner": "Member:1064",
+                "Token": "1.AlfredGrant{{number}}="
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.TammyGrant{{number}}=",
+                "Owner": "Member:1065",
+                "Token": "1.TammyGrant{{number}}=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.RonnieGrant{{number}}=",
+                "Owner": "Member:1078",
+                "Token": "1.RonnieGrant{{number}}=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+
+                "Name": "1.WillyGrant{{number}}=",
+                "Owner": "Member:1069",
+                "Token": "1.WillyGrant{{number}}=" 
+            }
+    },{
+        "command": "execute",
+        "assetType": "Grant",
+        "oid": "{{Grant}}",
+        "operation": "Revoke"
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.AdminGrant{{number}}=",
+                "Owner": "Member:20",
+                "Token": "1.AdminGrant{{number}}=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.AndreGrant{{number}}=",
+                "Owner": "Member:1063",
+                "Token": "1.AndreGrant{{number}}=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.AlfredGrant{{number}}=",
+                "Owner": "Member:1064",
+                "Token": "1.AlfredGrant{{number}}="
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.TammyGrant{{number}}=",
+                "Owner": "Member:1065",
+                "Token": "1.TammyGrant{{number}}=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.RonnieGrant{{number}}=",
+                "Owner": "Member:1078",
+                "Token": "1.RonnieGrant{{number}}=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+
+                "Name": "1.WillyGrant{{number}}=",
+                "Owner": "Member:1069",
+                "Token": "1.WillyGrant{{number}}=" 
+            }
+    },{
+        "command": "execute",
+        "assetType": "Grant",
+        "oid": "{{Grant}}",
+        "operation": "Revoke"
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.AdminGrant{{number}}=",
+                "Owner": "Member:20",
+                "Token": "1.AdminGrant{{number}}=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.AndreGrant{{number}}=",
+                "Owner": "Member:1063",
+                "Token": "1.AndreGrant{{number}}=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.AlfredGrant{{number}}=",
+                "Owner": "Member:1064",
+                "Token": "1.AlfredGrant{{number}}="
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.TammyGrant{{number}}=",
+                "Owner": "Member:1065",
+                "Token": "1.TammyGrant{{number}}=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.RonnieGrant{{number}}=",
+                "Owner": "Member:1078",
+                "Token": "1.RonnieGrant{{number}}=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+
+                "Name": "1.WillyGrant{{number}}=",
+                "Owner": "Member:1069",
+                "Token": "1.WillyGrant{{number}}=" 
+            }
+    },{
+        "command": "execute",
+        "assetType": "Grant",
+        "oid": "{{Grant}}",
+        "operation": "Revoke"
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.AdminGrant{{number}}=",
+                "Owner": "Member:20",
+                "Token": "1.AdminGrant{{number}}=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.AndreGrant{{number}}=",
+                "Owner": "Member:1063",
+                "Token": "1.AndreGrant{{number}}=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.AlfredGrant{{number}}=",
+                "Owner": "Member:1064",
+                "Token": "1.AlfredGrant{{number}}="
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.TammyGrant{{number}}=",
+                "Owner": "Member:1065",
+                "Token": "1.TammyGrant{{number}}=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.RonnieGrant{{number}}=",
+                "Owner": "Member:1078",
+                "Token": "1.RonnieGrant{{number}}=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+
+                "Name": "1.WillyGrant{{number}}=",
+                "Owner": "Member:1069",
+                "Token": "1.WillyGrant{{number}}=" 
+            }
+    },{
+        "command": "execute",
+        "assetType": "Grant",
+        "oid": "{{Grant}}",
+        "operation": "Revoke"
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.AdminGrant{{number}}=",
+                "Owner": "Member:20",
+                "Token": "1.AdminGrant{{number}}=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.AndreGrant{{number}}=",
+                "Owner": "Member:1063",
+                "Token": "1.AndreGrant{{number}}=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.AlfredGrant{{number}}=",
+                "Owner": "Member:1064",
+                "Token": "1.AlfredGrant{{number}}="
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.TammyGrant{{number}}=",
+                "Owner": "Member:1065",
+                "Token": "1.TammyGrant{{number}}=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.RonnieGrant{{number}}=",
+                "Owner": "Member:1078",
+                "Token": "1.RonnieGrant{{number}}=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+
+                "Name": "1.WillyGrant{{number}}=",
+                "Owner": "Member:1069",
+                "Token": "1.WillyGrant{{number}}=" 
+            }
+    },{
+        "command": "execute",
+        "assetType": "Grant",
+        "oid": "{{Grant}}",
+        "operation": "Revoke"
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.AdminGrant{{number}}=",
+                "Owner": "Member:20",
+                "Token": "1.AdminGrant{{number}}=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.AndreGrant{{number}}=",
+                "Owner": "Member:1063",
+                "Token": "1.AndreGrant{{number}}=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.AlfredGrant{{number}}=",
+                "Owner": "Member:1064",
+                "Token": "1.AlfredGrant{{number}}="
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.TammyGrant{{number}}=",
+                "Owner": "Member:1065",
+                "Token": "1.TammyGrant{{number}}=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.RonnieGrant{{number}}=",
+                "Owner": "Member:1078",
+                "Token": "1.RonnieGrant{{number}}=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+
+                "Name": "1.WillyGrant{{number}}=",
+                "Owner": "Member:1069",
+                "Token": "1.WillyGrant{{number}}=" 
+            }
+    },{
+        "command": "execute",
+        "assetType": "Grant",
+        "oid": "{{Grant}}",
+        "operation": "Revoke"
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.AdminGrant{{number}}=",
+                "Owner": "Member:20",
+                "Token": "1.AdminGrant{{number}}=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.AndreGrant{{number}}=",
+                "Owner": "Member:1063",
+                "Token": "1.AndreGrant{{number}}=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.AlfredGrant{{number}}=",
+                "Owner": "Member:1064",
+                "Token": "1.AlfredGrant{{number}}="
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.TammyGrant{{number}}=",
+                "Owner": "Member:1065",
+                "Token": "1.TammyGrant{{number}}=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Name": "1.RonnieGrant{{number}}=",
+                "Owner": "Member:1078",
+                "Token": "1.RonnieGrant{{number}}=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+
+                "Name": "1.WillyGrant{{number}}=",
+                "Owner": "Member:1069",
+                "Token": "1.WillyGrant{{number}}=" 
+            }
+    },{
+        "command": "execute",
+        "assetType": "Grant",
+        "oid": "{{Grant}}",
+        "operation": "Revoke"
+    }]
+}

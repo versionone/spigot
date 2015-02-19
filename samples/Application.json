@@ -1,0 +1,247 @@
+{
+    "username": "admin",
+    "password": "admin",
+
+    "commands": [
+    {
+        "command": "create",
+            "assetType": "Application",
+            "attributes": {
+                "Name": "CathyApp",
+                "IsPublic": "true",
+                "Owner": "Member:20",
+                "Description": "Public Application owned by Admin" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Application": "{{Application}}",
+                "Category": "Token",
+                "Owner": "Member:20",
+                "Token": "1.CathyAppAdmin6=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Category": "Token",
+                "Application": "{{Application}}",
+                "Owner": "Member:1063",
+                "Token": "1.CathyAppAndre6=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Category": "Token",
+                "Application": "{{Application}}",
+                "Owner": "Member:1064",
+                "Token": "1.CathyAppAlfred6="
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Category": "Token",
+                "Application": "{{Application}}",
+                "Owner": "Member:1065",
+                "Token": "1.CathyAppTammy6=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Category": "Token",
+                "Application": "{{Application}}",
+                "Owner": "Member:1078",
+                "Token": "1.CathyAppRonnie6=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Category": "Token",
+                "Application": "{{Application}}",
+                "Owner": "Member:1069",
+                "Token": "1.CathyAppWilly6=" 
+            }
+    },{
+        "command": "execute",
+        "assetType": "Grant",
+        "oid": "{{Grant}}",
+        "operation": "Revoke"
+    },{
+        "command": "create",
+            "assetType": "Application",
+            "attributes": {
+                "Name": "Revokable Public App",
+                "IsPublic": "true",
+                "Owner": "Member:1063",
+                "Description": "Public Application owned by Andre, slated for revocation" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Category": "Token",
+                "Application": "{{Application}}",
+                "Owner": "Member:1063",
+                "Token": "1.CathyAppAndre9=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Category": "Token",
+                "Application": "{{Application}}",
+                "Owner": "Member:1064",
+                "Token": "1.CathyAppAlfred9="
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Category": "Token",
+                "Application": "{{Application}}",
+                "Owner": "Member:1065",
+                "Token": "1.CathyAppTammy9=" 
+            }
+    },{
+        "command": "execute",
+        "assetType": "Application",
+        "oid": "{{Application}}",
+        "operation": "Revoke"
+    },{
+        "command": "create",
+            "assetType": "Application",
+            "attributes": {
+                "Name": "Andre Private App",
+                "IsPublic": "false",
+                "Owner": "Member:1063",
+                "Description": "Private Application owned by Andre, slated for promotion" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Category": "Token",
+                "Application": "{{Application}}",
+                "Owner": "Member:1063",
+                "Token": "1.AndrePersonal6=" 
+            }
+    },{
+        "command": "execute",
+        "assetType": "Application",
+        "oid": "{{Application}}",
+        "operation": "Promote"
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Category": "Token",
+                "Application": "{{Application}}",
+                "Owner": "Member:20",
+                "Token": "1.AdminGrant6=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Application",
+            "attributes": {
+                "Name": "Tammy Private App",
+                "IsPublic": "false",
+                "Owner": "Member:1065",
+                "Description": "Private Application owned by Tammy" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Category": "Token",
+                "Application": "{{Application}}",
+                "Owner": "Member:1065",
+                "Token": "1.TammyPersonal6=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Application",
+            "attributes": {
+                "Name": "Alfred Private App",
+                "IsPublic": "false",
+                "Owner": "Member:1064",
+                "Description": "Private Application owned by Alfred" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Category": "Token",
+                "Application": "{{Application}}",
+                "Owner": "Member:1064",
+                "Token": "1.AlfredPersonal6=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Application",
+            "attributes": {
+                "Name": "CathyApp2",
+                "IsPublic": "true",
+                "Owner": "Member:20",
+                "Description": "Public Application owned by Admin" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Application": "{{Application}}",
+                "Category": "Token",
+                "Owner": "Member:20",
+                "Token": "1.CathyAppAdmin0=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Category": "Token",
+                "Application": "{{Application}}",
+                "Owner": "Member:1063",
+                "Token": "1.CathyAppAndre0=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Category": "Token",
+                "Application": "{{Application}}",
+                "Owner": "Member:1064",
+                "Token": "1.CathyAppAlfred0="
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Category": "Token",
+                "Application": "{{Application}}",
+                "Owner": "Member:1065",
+                "Token": "1.CathyAppTammy0=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Category": "Token",
+                "Application": "{{Application}}",
+                "Owner": "Member:1078",
+                "Token": "1.CathyAppRonnie0=" 
+            }
+    },{
+        "command": "create",
+            "assetType": "Grant",
+            "attributes": {
+                "Category": "Token",
+                "Application": "{{Application}}",
+                "Owner": "Member:1069",
+                "Token": "1.CathyAppWilly0=" 
+            }
+    }]
+}
