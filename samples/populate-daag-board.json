@@ -1,0 +1,41 @@
+[{
+    "username": "admin",
+    "password": "admin",
+
+    "commands": [
+        {
+            "command": "create",
+            "assetType": "Story",
+            "attributes": {
+                "Name": "Story 1",
+                "Scope": "Scope:0"
+            }
+        },
+        {
+            "command": "create",
+            "assetType": "Story",
+            "attributes": {
+                "Name": "Story 2",
+                "Scope": "Scope:0"
+            }
+        },
+        {
+            "command": "create",
+            "assetType": "Phase",
+            "attributes": {
+                "Name": "Phase 1"
+            }
+        },
+        {
+            "command": "create",
+            "assetType": "Bundle",
+            "attributes": {
+                "Name": "Bundle 1",
+                "Phase": "{{Phase}}",
+                "Workitems": {
+                    "add": ["{{Story}}", "{{Story2}}"]
+                }
+            }
+        }
+    ]
+}]
