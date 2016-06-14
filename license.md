@@ -1,4 +1,4 @@
-# VersionOne SDK.JavaScript License
+# VersionOne Spigot License
 Copyright (c) 2012 VersionOne, Inc.
 All rights reserved.
 
