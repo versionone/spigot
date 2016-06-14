@@ -130,6 +130,34 @@ Use {{`<assettype>`}} example: {{Story}} or {{Task}}
 }
 ```
 
+Use {{`<asset name>`}} example: {{Story 1}} or {{A Specific Story}}
+```json
+{
+    "commands": [{
+        "command": "create",
+        "assetType": "Story",
+        "attributes": {
+            "Name": "Story 1",
+            "Scope": "Scope:0"
+        }
+    }, {
+        "command": "create",
+        "assetType": "Task",
+        "attributes": {
+            "Name": "Task 1",
+            "Parent": "{{Story 1}}"
+        }
+    },{
+        "command": "create",
+        "assetType": "Task",
+        "attributes": {
+            "Name": "Task 2",
+            "Parent": "{{A Specific Story}}"
+        }
+    }
+}
+```
+
 ### Executing an Operation
 ```json
 {

@@ -65,8 +65,12 @@
                         console.log(err);
                         return callback(err);
                     }
-                    if (asset && asset.assetType)
+                    if (asset && asset.name) {
+                        self.streamVariables[asset.name] = asset.oid;
+                    }
+                    if (asset && asset.assetType) {
                         self.streamVariables[asset.assetType] = asset.oid;
+                    }
                     callback(err, asset);
                 });
             });

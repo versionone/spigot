@@ -1,41 +1,126 @@
-[{
-    "username": "admin",
-    "password": "admin",
+[
+    {
+        "username": "admin",
+        "password": "admin",
 
-    "commands": [
-        {
-            "command": "create",
-            "assetType": "Story",
-            "attributes": {
-                "Name": "Story 1",
-                "Scope": "Scope:0"
-            }
-        },
-        {
-            "command": "create",
-            "assetType": "Story",
-            "attributes": {
-                "Name": "Story 2",
-                "Scope": "Scope:0"
-            }
-        },
-        {
-            "command": "create",
-            "assetType": "Phase",
-            "attributes": {
-                "Name": "Phase 1"
-            }
-        },
-        {
-            "command": "create",
-            "assetType": "Bundle",
-            "attributes": {
-                "Name": "Bundle 1",
-                "Phase": "{{Phase}}",
-                "Workitems": {
-                    "add": ["{{Story}}"]
+        "commands": [
+            {
+                "command": "create",
+                "assetType": "Story",
+                "attributes": {
+                    "Name": "Story 1",
+                    "Scope": "Scope:0"
+                }
+            },
+            {
+                "command": "create",
+                "assetType": "Story",
+                "attributes": {
+                    "Name": "Story 2",
+                    "Scope": "Scope:0"
+                }
+            },
+            {
+                "command": "create",
+                "assetType": "Phase",
+                "attributes": {
+                    "Name": "Phase 1"
+                }
+            },
+            {
+                "command": "create",
+                "assetType": "Bundle",
+                "attributes": {
+                    "Name": "Bundle 1",
+                    "Phase": "{{Phase 1}}",
+                    "Workitems": {
+                        "add": [
+                            "{{Story 1}}",
+                            "{{Story 2}}"
+                        ]
+                    }
                 }
             }
-        }
-    ]
-}]
+        ]
+    },
+    {
+        "username": "admin",
+        "password": "admin",
+
+        "commands": [
+            {
+                "command": "create",
+                "assetType": "Story",
+                "attributes": {
+                    "Name": "Story 3",
+                    "Scope": "Scope:0"
+                }
+            },
+            {
+                "command": "create",
+                "assetType": "Story",
+                "attributes": {
+                    "Name": "Story 4",
+                    "Scope": "Scope:0"
+                }
+            },
+            {
+                "command": "create",
+                "assetType": "Story",
+                "attributes": {
+                    "Name": "Story 5",
+                    "Scope": "Scope:0"
+                }
+            },
+            {
+                "command": "create",
+                "assetType": "Story",
+                "attributes": {
+                    "Name": "Story 6",
+                    "Scope": "Scope:0"
+                }
+            },
+            {
+                "command": "create",
+                "assetType": "Story",
+                "attributes": {
+                    "Name": "Story 7",
+                    "Scope": "Scope:0"
+                }
+            },
+            {
+                "command": "create",
+                "assetType": "Story",
+                "attributes": {
+                    "Name": "Story 8",
+                    "Scope": "Scope:0"
+                }
+            },
+            {
+                "command": "create",
+                "assetType": "Phase",
+                "attributes": {
+                    "Name": "Phase 2"
+                }
+            },
+            {
+                "command": "create",
+                "assetType": "Bundle",
+                "attributes": {
+                    "Name": "Bundle 2",
+                    "Phase": "{{Phase 2}}",
+                    "Workitems": {
+                        "add": [
+                            "{{Story 3}}",
+                            "{{Story 4}}",
+                            "{{Story 5}}",
+                            "{{Story 6}}",
+                            "{{Story 7}}",
+                            "{{Story 8}}"
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+]
