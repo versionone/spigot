@@ -33,7 +33,7 @@
                 "Name": "Bundle 1",
                 "Phase": "{{Phase}}",
                 "Workitems": {
-                    "add": ["{{Story}}", "{{Story2}}"]
+                    "add": ["{{Story}}"]
                 }
             }
         }
