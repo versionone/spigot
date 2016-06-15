@@ -29,10 +29,15 @@
             create: function(v1, command, callback) {
                 var assetType = command.assetType;
                 var attributes = command.attributes;
-                v1.create(assetType, attributes, function(err, asset) {
-                    spigot.createdOids.push(asset.oid);
-                    callback(err, asset);
-                });
+                var times = command.times || 1;
+                var j = 0;
+                for(var i = 0; i < times; i++) {
+                    v1.create(assetType, attributes, function(err, asset) {
+                        callback(err, asset, j);
+                        j++
+                    });
+                }
+
             },
             update: function(v1, command, callback) {
                 var oid = command.oid;
@@ -60,10 +65,13 @@
                 var b = Mustache.render(a, self.streamVariables);
                 var c = JSON.parse(b);
                 console.log(c);
-                self.commands[c.command](v1, c, function(err, asset) {
+                self.commands[c.command](v1, c, function(err, asset, i) {
                     if (err) {
                         console.log(err);
                         return callback(err);
+                    }
+                    if (asset && asset.name && i) {
+                        self.streamVariables[asset.name + " " + i] = asset.oid;
                     }
                     if (asset && asset.name) {
                         self.streamVariables[asset.name] = asset.oid;

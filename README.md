@@ -61,6 +61,36 @@ spigot --url <url> --username <username> --password <password> --throttle <event
 }
 ```
 
+### Creating an asset n times (requires name).
+```json
+{
+    "commands": [{
+        "command": "create",
+        "times": "5"
+        "assetType": "Story",
+        "attributes": {
+            "Name": "StoryName",
+            "Scope": "Scope:0"
+        }
+    },
+    {
+        "command": "create",
+        "assetType": "Bundle",
+        "attributes": {
+            "Name": "Story 1",
+            "Workitems": {
+                "add": [
+                    "{{StoryName 1}}",
+                    "{{StoryName 2}}",
+                    "{{StoryName 3}}"
+                    "{{StoryName 4}}"
+                ]
+            }
+        }
+    }]
+}
+```
+
 ### Updating an asset
 ```json
 {
