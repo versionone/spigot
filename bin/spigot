@@ -33,7 +33,7 @@ var data = _.flatten(_.map(parsed.argv.remain, function(f) {
 }));
 
 var spigot = new Spigot({
-    url: parsed.url,
+    url: parsed.url || 'http://localhost/VersionOne.Web',
     username: parsed.username,
     password: parsed.password,
     throttle: parsed.throttle,
