@@ -24,6 +24,17 @@ Cloning
 git clone git@github.com:versionone/spigot.git
 ```
 
+## Building
+Local build
+
+```
+#Install dependencies
+npm install
+
+#Build
+npm run build
+```
+
 ## Running
 Globally installed
 ```sh
