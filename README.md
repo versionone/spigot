@@ -24,7 +24,7 @@ Cloning
 git clone git@github.com:versionone/spigot.git
 ```
 
-## Building
+## Developing
 Local build
 
 ```
