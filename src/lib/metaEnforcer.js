@@ -1,4 +1,3 @@
-import _ from 'underscore';
 import request from 'superagent';
 import btoa from 'btoa';
 
@@ -11,17 +10,19 @@ export default (url, sampleData) => new Promise(
     }
 );
 
-const getAssetTypes = sampleData => {
-    const data = Array.isArray(sampleData) ? sampleData : [sampleData];
-    const assetTypes = _
-        .flatten(data.map(intent => intent.commands))
-        .filter(function(command){ return command.command === 'create' })
-        .map(function(command) { return command.assetType });
-    return _.uniq(assetTypes, assetType => assetType);
+const getAssetTypes = data => {
+    return []
+        .concat
+        .apply([], data.map(intent => intent.commands))
+        .filter(command => command.command === 'create')
+        .map(command => command.assetType)
+        .sort()
+        .filter((value, index, array) => (index === 0) || (value !== array[index-1]));
 };
 
 const getMetaDefinitions = (url, sampleData) => {
-    const unqiueAssetTypes = getAssetTypes(sampleData);
+    const data = Array.isArray(sampleData) ? sampleData : [sampleData];
+    const unqiueAssetTypes = getAssetTypes(data);
     return Promise.all(unqiueAssetTypes.map(assetType => {
         return new Promise((resolve, reject) => {
             const metaV1Url = `${url}meta.v1/${assetType}`;
