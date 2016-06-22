@@ -2,7 +2,6 @@
 
 var nopt = require("nopt");
 var path = require("path");
-var _ = require('underscore');
 var MetaEnforcer = require('./../dist/lib/metaEnforcer').default;
 var Spigot = new require("./../dist/index.js").default;
 
@@ -28,7 +27,7 @@ if (parsed.argv.remain.length == 0) {
     return;
 }
 
-var data = _.flatten(_.map(parsed.argv.remain, function(f) {
+var data = [].concat.apply([], parsed.argv.remain.map(function(f) {
     return require(path.resolve(process.cwd(), f));
 }));
 
