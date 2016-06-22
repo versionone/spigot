@@ -30,8 +30,8 @@ const getAssetType = command => {
 
 const getMetaDefinitions = (url, sampleData) => {
     const data = Array.isArray(sampleData) ? sampleData : [sampleData];
-    const unqiueAssetTypes = getAssetTypes(data);
-    return Promise.all(unqiueAssetTypes.map(assetType => {
+    const uniqueAssetTypes = getAssetTypes(data);
+    return Promise.all(uniqueAssetTypes.map(assetType => {
         return new Promise((resolve, reject) => {
             const root = url.slice(-1) === '/' ? url : `${url}/`;
             const metaV1Url = `${root}meta.v1/${assetType}`;
