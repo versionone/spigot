@@ -14,10 +14,18 @@ const getAssetTypes = data => {
     return []
         .concat
         .apply([], data.map(intent => intent.commands))
-        .filter(command => command.command === 'create')
-        .map(command => command.assetType)
+        .map(command => getAssetType(command))
         .sort()
         .filter((value, index, array) => (index === 0) || (value !== array[index-1]));
+};
+
+const getAssetType = command => {
+    const map = {
+        'create': command => command.assetType,
+        'update': command => command.oid.split(':')[0],
+        'execute': command => command.oid.split(':')[0]
+    };
+    return map[command.command](command);
 };
 
 const getMetaDefinitions = (url, sampleData) => {

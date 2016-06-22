@@ -26,13 +26,26 @@ exports.default = function (url, sampleData) {
 var getAssetTypes = function getAssetTypes(data) {
     return [].concat.apply([], data.map(function (intent) {
         return intent.commands;
-    })).filter(function (command) {
-        return command.command === 'create';
-    }).map(function (command) {
-        return command.assetType;
+    })).map(function (command) {
+        return getAssetType(command);
     }).sort().filter(function (value, index, array) {
         return index === 0 || value !== array[index - 1];
     });
+};
+
+var getAssetType = function getAssetType(command) {
+    var map = {
+        'create': function create(command) {
+            return command.assetType;
+        },
+        'update': function update(command) {
+            return command.oid.split(':')[0];
+        },
+        'execute': function execute(command) {
+            return command.oid.split(':')[0];
+        }
+    };
+    return map[command.command](command);
 };
 
 var getMetaDefinitions = function getMetaDefinitions(url, sampleData) {
