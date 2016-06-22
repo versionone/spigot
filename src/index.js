@@ -1,10 +1,8 @@
 import Mustache from 'mustache';
-import node from 'when/node'
 import parallel from 'when/parallel';
 import sequence from 'when/sequence';
 import trickle from 'timetrickle';
 import V1 from './lib/v1';
-import when from 'when';
 
 export default class Spigot {
     constructor({ url, username, password, forever, throttle, throttleInterval }) {
@@ -27,7 +25,7 @@ export default class Spigot {
             create: (v1, command, callback) => {
                 const { assetType, attributes, times } = command;
                 const Times = Array.apply(null, { length: (times || 1) }).map(Number.call, Number)
-                when.all(Times.map(() => when.promise(
+                Promise.all(Times.map(() => new Promise(
                     (resolve, reject) => {
                         v1.create(assetType, attributes, (err, asset) => {
                             resolve({ err: err, asset: asset });
@@ -104,14 +102,14 @@ export default class Spigot {
             const password = data.password || this.password;
             const executableCommands = data.commands.map(command => () => {
                 const v1 = new V1(url, username, password);
-                const promiseExecute = node.call(this.execute, this, v1, command);
+                const promiseExecute = Promise.resolve().call(this.execute, this, v1, command);
                 promiseExecute.done(() => {
                     ++this.totalSent;
                 });
                 return promiseExecute;
             });
 
-            return when.all(executableCommands);
+            return Promise.all(executableCommands);
         };
 
         this.executeSeries = (data, callback) => {
@@ -124,9 +122,9 @@ export default class Spigot {
 
         this.executeBatch = (data, method, callback) => {
             let once = true;
-            when.iterate(() => {
+            Promise.iterate(() => {
                 const payload = Array.isArray(data) ? data : [data];
-                const executions = when.all(payload.map(d => method(this.wrapForExecution(d))));
+                const executions = Promise.all(payload.map(d => method(this.wrapForExecution(d))));
                 return executions;
             }, () => {
                 return !this.forever && !once;
