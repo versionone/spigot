@@ -3,6 +3,8 @@ import parallel from 'when/parallel';
 import sequence from 'when/sequence';
 import trickle from 'timetrickle';
 import V1 from './lib/v1';
+import when from 'when';
+import node from 'when/node';
 
 export default class Spigot {
     constructor({ url, username, password, forever, throttle, throttleInterval }) {
@@ -102,7 +104,7 @@ export default class Spigot {
             const password = data.password || this.password;
             const executableCommands = data.commands.map(command => () => {
                 const v1 = new V1(url, username, password);
-                const promiseExecute = Promise.resolve().call(this.execute, this, v1, command);
+                const promiseExecute = node.call(this.execute, this, v1, command);
                 promiseExecute.done(() => {
                     ++this.totalSent;
                 });
@@ -122,7 +124,7 @@ export default class Spigot {
 
         this.executeBatch = (data, method, callback) => {
             let once = true;
-            Promise.iterate(() => {
+            when.iterate(() => {
                 const payload = Array.isArray(data) ? data : [data];
                 const executions = Promise.all(payload.map(d => method(this.wrapForExecution(d))));
                 return executions;
