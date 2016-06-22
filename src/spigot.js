@@ -53,7 +53,6 @@ export default class Spigot {
 
 
         this.execute = (self, v1, command, callback) => {
-            console.log('execute here');
             this.throttler(() => {
                 const a = JSON.stringify(command);
                 const b = Mustache.render(a, this.streamVariables);
@@ -116,7 +115,6 @@ export default class Spigot {
         };
 
         this.executeSeries = (data, callback) => {
-            console.log('launch');
             this.executeBatch(data, sequence, callback);
         };
 

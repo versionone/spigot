@@ -105,7 +105,6 @@ var Spigot = function Spigot(_ref) {
     };
 
     this.execute = function (self, v1, command, callback) {
-        console.log('execute here');
         _this.throttler(function () {
             var a = JSON.stringify(command);
             var b = _mustache2.default.render(a, _this.streamVariables);
@@ -167,7 +166,6 @@ var Spigot = function Spigot(_ref) {
     };
 
     this.executeSeries = function (data, callback) {
-        console.log('launch');
         _this.executeBatch(data, _sequence2.default, callback);
     };
 
