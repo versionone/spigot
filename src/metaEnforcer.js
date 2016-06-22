@@ -47,19 +47,37 @@ const getMetaDefinitions = (url, sampleData) => {
 };
 
 const dropUnknownAttributes = (sampleData, metaDefinitions) => {
+    const commandsToDrop = [];
     sampleData.forEach(intent => {
         intent.commands.forEach(command => {
             const assetType = getAssetType(command);
             const metaDefinition = metaDefinitions.find(metaDef => metaDef.Token === assetType);
-            const attributes = command.attributes || [];
-            for(var attribute in attributes) {
-                const AssetAttribute = `${assetType}.${attribute}`;
-                if(!metaDefinition.Attributes[AssetAttribute]) {
-                    console.log("========>", "drop unknown attribute", AssetAttribute);
-                    delete attributes[attribute]
+
+            const commandType = command.command;
+
+            if(commandType === 'create' || commandType === 'update') {
+                const attributes = command.attributes || [];
+                for(var attribute in attributes) {
+                    const AssetAttribute = `${assetType}.${attribute}`;
+                    if(!metaDefinition.Attributes[AssetAttribute]) {
+                        console.log("========>", "drop unknown attribute", AssetAttribute);
+                        delete attributes[attribute]
+                    }
                 }
             }
+            else if(commandType === 'execute') {
+                const AssetOperation = `${assetType}.${command.operation}`;
+                if(!metaDefinition.Operations[AssetOperation]) {
+                    console.log("========>", "drop unknown operation", AssetOperation);
+                    commandsToDrop.push(command);
+                }
+            }
+
         });
+    });
+
+    sampleData.forEach(intent => {
+        intent.commands = intent.commands.filter(command => commandsToDrop.indexOf(command) <= -1)
     });
     return sampleData;
 };

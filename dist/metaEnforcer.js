@@ -63,20 +63,38 @@ var getMetaDefinitions = function getMetaDefinitions(url, sampleData) {
 };
 
 var dropUnknownAttributes = function dropUnknownAttributes(sampleData, metaDefinitions) {
+    var commandsToDrop = [];
     sampleData.forEach(function (intent) {
         intent.commands.forEach(function (command) {
             var assetType = getAssetType(command);
             var metaDefinition = metaDefinitions.find(function (metaDef) {
                 return metaDef.Token === assetType;
             });
-            var attributes = command.attributes || [];
-            for (var attribute in attributes) {
-                var AssetAttribute = assetType + '.' + attribute;
-                if (!metaDefinition.Attributes[AssetAttribute]) {
-                    console.log("========>", "drop unknown attribute", AssetAttribute);
-                    delete attributes[attribute];
+
+            var commandType = command.command;
+
+            if (commandType === 'create' || commandType === 'update') {
+                var attributes = command.attributes || [];
+                for (var attribute in attributes) {
+                    var AssetAttribute = assetType + '.' + attribute;
+                    if (!metaDefinition.Attributes[AssetAttribute]) {
+                        console.log("========>", "drop unknown attribute", AssetAttribute);
+                        delete attributes[attribute];
+                    }
+                }
+            } else if (commandType === 'execute') {
+                var AssetOperation = assetType + '.' + command.operation;
+                if (!metaDefinition.Operations[AssetOperation]) {
+                    console.log("========>", "drop unknown operation", AssetOperation);
+                    commandsToDrop.push(command);
                 }
             }
+        });
+    });
+
+    sampleData.forEach(function (intent) {
+        intent.commands = intent.commands.filter(function (command) {
+            return commandsToDrop.indexOf(command) <= -1;
         });
     });
     return sampleData;
