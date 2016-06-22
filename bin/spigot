@@ -34,7 +34,7 @@ var data = _.flatten(_.map(parsed.argv.remain, function(f) {
 
 var url = parsed.url || 'http://localhost/VersionOne.Web/';
 
-new MetaEnforcer().transformCommands(url, data)
+MetaEnforcer(url, data)
     .then(function(transformedData, err) {
         var spigot = new Spigot({
             url: url,
