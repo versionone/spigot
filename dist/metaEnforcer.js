@@ -40,7 +40,8 @@ var getMetaDefinitions = function getMetaDefinitions(url, sampleData) {
     var unqiueAssetTypes = getAssetTypes(data);
     return Promise.all(unqiueAssetTypes.map(function (assetType) {
         return new Promise(function (resolve, reject) {
-            var metaV1Url = url + 'meta.v1/' + assetType;
+            var root = url.slice(-1) === '/' ? url : url + '/';
+            var metaV1Url = root + 'meta.v1/' + assetType;
             _superagent2.default.get(metaV1Url).set('Authorization', 'Basic ' + (0, _btoa2.default)("admin:admin")).set('Accept', 'application/json').end(function (err, response) {
                 resolve(response.body);
             });

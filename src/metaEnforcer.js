@@ -25,7 +25,8 @@ const getMetaDefinitions = (url, sampleData) => {
     const unqiueAssetTypes = getAssetTypes(data);
     return Promise.all(unqiueAssetTypes.map(assetType => {
         return new Promise((resolve, reject) => {
-            const metaV1Url = `${url}meta.v1/${assetType}`;
+            const root = url.slice(-1) === '/' ? url : `${url}/`;
+            const metaV1Url = `${root}meta.v1/${assetType}`;
             request
                 .get(metaV1Url)
                 .set('Authorization', `Basic ${btoa("admin:admin")}`)
