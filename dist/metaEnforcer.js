@@ -65,25 +65,17 @@ var getMetaDefinitions = function getMetaDefinitions(url, sampleData) {
 var dropUnknownAttributes = function dropUnknownAttributes(sampleData, metaDefinitions) {
     sampleData.forEach(function (intent) {
         intent.commands.forEach(function (command) {
-            if (command.command === 'create') {
-                var metaDefinition;
-                var attribute;
-
-                (function () {
-                    var assetType = command.assetType;
-                    var attributes = command.attributes;
-                    metaDefinition = metaDefinitions.find(function (metaDef) {
-                        return metaDef.Token === assetType;
-                    });
-
-                    for (attribute in attributes) {
-                        var AssetAttribute = assetType + '.' + attribute;
-                        if (!metaDefinition.Attributes[AssetAttribute]) {
-                            console.log("========>", "drop unknown attribute", AssetAttribute);
-                            delete attributes[attribute];
-                        }
-                    }
-                })();
+            var assetType = getAssetType(command);
+            var metaDefinition = metaDefinitions.find(function (metaDef) {
+                return metaDef.Token === assetType;
+            });
+            var attributes = command.attributes || [];
+            for (var attribute in attributes) {
+                var AssetAttribute = assetType + '.' + attribute;
+                if (!metaDefinition.Attributes[AssetAttribute]) {
+                    console.log("========>", "drop unknown attribute", AssetAttribute);
+                    delete attributes[attribute];
+                }
             }
         });
     });

@@ -49,15 +49,14 @@ const getMetaDefinitions = (url, sampleData) => {
 const dropUnknownAttributes = (sampleData, metaDefinitions) => {
     sampleData.forEach(intent => {
         intent.commands.forEach(command => {
-            if(command.command === 'create') {
-                const { assetType, attributes } = command;
-                var metaDefinition = metaDefinitions.find(metaDef => metaDef.Token === assetType);
-                for(var attribute in attributes) {
-                    const AssetAttribute = `${assetType}.${attribute}`;
-                    if(!metaDefinition.Attributes[AssetAttribute]) {
-                        console.log("========>", "drop unknown attribute", AssetAttribute);
-                        delete attributes[attribute]
-                    }
+            const assetType = getAssetType(command);
+            const metaDefinition = metaDefinitions.find(metaDef => metaDef.Token === assetType);
+            const attributes = command.attributes || [];
+            for(var attribute in attributes) {
+                const AssetAttribute = `${assetType}.${attribute}`;
+                if(!metaDefinition.Attributes[AssetAttribute]) {
+                    console.log("========>", "drop unknown attribute", AssetAttribute);
+                    delete attributes[attribute]
                 }
             }
         });
