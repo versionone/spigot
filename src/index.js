@@ -61,15 +61,16 @@ export default class Spigot {
                         console.log(err);
                         return callback(err);
                     }
-                    if (asset && asset.name && i) {
-                        this.streamVariables[asset.name + " " + i] = asset.oid;
-                    }
-                    if (asset && asset.name) {
-                        this.streamVariables[asset.name] = asset.oid;
-                    }
-                    if (asset && asset.assetType) {
-                        this.streamVariables[asset.assetType] = asset.oid;
-                    }
+                    let newStreamVariables = [];
+                    if (asset && asset.name && i)
+                        newStreamVariables.push(`${asset.name} ${i}`);
+                    if (asset && asset.name)
+                        newStreamVariables.push(asset.name);
+                    if (asset && asset.assetType)
+                        newStreamVariables.push(asset.type);
+                    newStreamVariables.forEach(variable => {
+                        this.streamVariables[variable] = asset.oid;
+                    });
                     callback(err, asset);
                 });
             });
