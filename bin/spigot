@@ -3,9 +3,8 @@
 var nopt = require("nopt");
 var path = require("path");
 var _ = require('underscore');
-var request = require('superagent');
-var btoa = require('btoa');
-var transformCommandsForAVersionOfMeta = require('./../lib/commandsParser');
+var MetaEnforcer = require('./../dist/lib/metaEnforcer').default;
+var Spigot = new require("./../dist/index.js").default;
 
 var knownOpts = {
     "parallel": Boolean,
@@ -20,11 +19,9 @@ var knownOpts = {
 var shortHands = {
     "u": ["--username"],
     "p": ["--password"]
-}
+};
 
 var parsed = nopt(knownOpts, shortHands, process.argv, 2);
-
-var Spigot = new require("../index.js");
 
 if (parsed.argv.remain.length == 0) {
     console.log("Requires a data file");
@@ -34,24 +31,27 @@ if (parsed.argv.remain.length == 0) {
 var data = _.flatten(_.map(parsed.argv.remain, function(f) {
     return require(path.resolve(process.cwd(), f));
 }));
-var url = parsed.url || 'http://localhost/VersionOne.Web/';
-transformCommandsForAVersionOfMeta(url, data).then(function(transformedData, err) {
-    var spigot = new Spigot({
-        url: url,
-        username: parsed.username,
-        password: parsed.password,
-        throttle: parsed.throttle,
-        throttleInterval: parsed.throttleinterval,
-        forever: parsed.forever
-    });
 
-    if (parsed.parallel) {
-        console.log('Executing in a parallel');
-        spigot.executeParallel(transformedData);
-    }
-    else {
-        console.log('Executing in sequence');
-        spigot.executeSeries(transformedData);
-    }
-});
+var url = parsed.url || 'http://localhost/VersionOne.Web/';
+
+new MetaEnforcer().transformCommands(url, data)
+    .then(function(transformedData, err) {
+        var spigot = new Spigot({
+            url: url,
+            username: parsed.username,
+            password: parsed.password,
+            throttle: parsed.throttle,
+            throttleInterval: parsed.throttleinterval,
+            forever: parsed.forever
+        });
+
+        if (parsed.parallel) {
+            console.log('Executing in a parallel');
+            spigot.executeParallel(transformedData);
+        }
+        else {
+            console.log('Executing in sequence');
+            spigot.executeSeries(transformedData);
+        }
+    });
 
