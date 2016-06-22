@@ -14,10 +14,18 @@ const getAssetTypes = data => {
     return []
         .concat
         .apply([], data.map(intent => intent.commands))
-        .filter(command => command.command === 'create')
-        .map(command => command.assetType)
+        .map(command => getAssetType(command))
         .sort()
         .filter((value, index, array) => (index === 0) || (value !== array[index-1]));
+};
+
+const getAssetType = command => {
+    const map = {
+        'create': command => command.assetType,
+        'update': command => command.oid.split(':')[0],
+        'execute': command => command.oid.split(':')[0]
+    };
+    return map[command.command](command);
 };
 
 const getMetaDefinitions = (url, sampleData) => {
@@ -41,15 +49,14 @@ const getMetaDefinitions = (url, sampleData) => {
 const dropUnknownAttributes = (sampleData, metaDefinitions) => {
     sampleData.forEach(intent => {
         intent.commands.forEach(command => {
-            if(command.command === 'create') {
-                const { assetType, attributes } = command;
-                var metaDefinition = metaDefinitions.find(metaDef => metaDef.Token === assetType);
-                for(var attribute in attributes) {
-                    const AssetAttribute = `${assetType}.${attribute}`;
-                    if(!metaDefinition.Attributes[AssetAttribute]) {
-                        console.log("========>", "drop unknown attribute", AssetAttribute);
-                        delete attributes[attribute]
-                    }
+            const assetType = getAssetType(command);
+            const metaDefinition = metaDefinitions.find(metaDef => metaDef.Token === assetType);
+            const attributes = command.attributes || [];
+            for(var attribute in attributes) {
+                const AssetAttribute = `${assetType}.${attribute}`;
+                if(!metaDefinition.Attributes[AssetAttribute]) {
+                    console.log("========>", "drop unknown attribute", AssetAttribute);
+                    delete attributes[attribute]
                 }
             }
         });
