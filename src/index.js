@@ -25,15 +25,17 @@ export default class Spigot {
 
         this.commands = {
             create: (v1, command, callback) => {
-                const { assetType, attributes } = command;
-                const times = command.times || 1;
-                let j = 0;
-                for(let i = 0; i < times; i++) {
-                    v1.create(assetType, attributes, (err, asset) => {
-                        callback(err, asset, j);
-                        j++
-                    });
-                }
+                const { assetType, attributes, times } = command;
+                const Times = new Array(times || 1);
+                when.all(Times.map(() => when.promise(
+                    (resolve, reject) => {
+                        v1.create(assetType, attributes, (err, asset) => {
+                            resolve({ err: err, asset: asset });
+                        });
+                    })
+                )).then(results => {
+                    results.forEach((r, i) => callback(r.err, r.asset, i));
+                });
             },
             update: (v1, command, callback) => {
                 const { oid, attributes } = command;
