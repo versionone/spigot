@@ -2,8 +2,7 @@
 
 var nopt = require("nopt");
 var path = require("path");
-var MetaEnforcer = require('./../dist/lib/metaEnforcer').default;
-var Spigot = new require("./../dist/index.js").default;
+var Runner = require('./../dist/index').default;
 
 var knownOpts = {
     "parallel": Boolean,
@@ -31,26 +30,5 @@ var data = [].concat.apply([], parsed.argv.remain.map(function(f) {
     return require(path.resolve(process.cwd(), f));
 }));
 
-var url = parsed.url || 'http://localhost/VersionOne.Web/';
-
-MetaEnforcer(url, data)
-    .then(function(transformedData, err) {
-        var spigot = new Spigot({
-            url: url,
-            username: parsed.username,
-            password: parsed.password,
-            throttle: parsed.throttle,
-            throttleInterval: parsed.throttleinterval,
-            forever: parsed.forever
-        });
-
-        if (parsed.parallel) {
-            console.log('Executing in a parallel');
-            spigot.executeParallel(transformedData);
-        }
-        else {
-            console.log('Executing in sequence');
-            spigot.executeSeries(transformedData);
-        }
-    });
+Runner(parsed, data);
 
