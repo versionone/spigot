@@ -34,6 +34,10 @@ var _url2 = _interopRequireDefault(_url);
 
 var _v1sdk = require('v1sdk');
 
+var _Oid = require('v1sdk/dist/Oid');
+
+var _Oid2 = _interopRequireDefault(_Oid);
+
 var _when = require('when');
 
 var _when2 = _interopRequireDefault(_when);
@@ -90,12 +94,8 @@ var Spigot = function Spigot(_ref) {
             var c = JSON.parse(b);
             console.log(c);
             _this.commands[c.command](v1, c).then(function (results) {
-                console.log(results);
                 var assets = Array.isArray(results) ? results : [results];
-                assets.forEach(function (p, i) {
-                    console.log(p);
-                    //p.then(asset => {
-                    console.log(asset);
+                assets.forEach(function (asset, i) {
                     var newStreamVariables = [];
                     if (asset && asset.name && i) newStreamVariables.push(asset.name + ' ' + i);
                     if (asset && asset.name) newStreamVariables.push(asset.name);
@@ -104,7 +104,6 @@ var Spigot = function Spigot(_ref) {
                         _this.streamVariables[variable] = asset.oid;
                     });
                     callback(null, asset);
-                    //});
                 });
             }).catch(function (error) {
                 console.log(error);
@@ -196,10 +195,8 @@ var getV1Instance = function getV1Instance(v1Url, username, password) {
         username: username,
         password: password,
         postFn: function postFn(url, data, headerObj) {
-            return Promise.resolve(function (resolve, reject) {
-                console.log(url, data, headerObj);
+            return new Promise(function (resolve, reject) {
                 _superagent2.default.post(url).send(data).set(headerObj).end(function (error, response) {
-                    console.log(response.body);
                     error ? reject(error) : resolve(response.body);
                 });
             });
@@ -214,9 +211,7 @@ var create = function create(v1, command) {
 
     var Times = Array.apply(null, { length: times || 1 }).map(Number.call, Number);
     return Promise.all(Times.map(function () {
-        return Promise.resolve(function (resolve, reject) {
-            resolve(v1.create(assetType, attributes));
-        });
+        return v1.create(assetType, attributes);
     }));
 };
 
@@ -224,30 +219,17 @@ var update = function update(v1, command) {
     var oid = command.oid;
     var attributes = command.attributes;
 
-    return Promise.resolve(function (resolve, reject) {
-        v1.update(oid, attributes).then(function (rawResult) {
-            if (!rawResult) {
-                reject(new Error());
-            }
-            resolve(rawResult._v1_current_data);
-        }).catch(function (error) {
-            reject(error);
-        });
-    });
+    var _ref2 = new _Oid2.default(oid);
+
+    var idNumber = _ref2.idNumber;
+    var type = _ref2.type;
+
+    return v1.update(idNumber, type, attributes, '');
 };
 
 var execute = function execute(v1, command) {
     var oid = command.oid;
     var operation = command.operation;
 
-    return Promise.resolve(function (resolve, reject) {
-        v1.executeOperation(oid, operation).then(function (rawResult) {
-            if (!rawResult) {
-                reject(new Error());
-            }
-            resolve(rawResult._v1_current_data);
-        }).catch(function (error) {
-            reject(error);
-        });
-    });
+    return v1.executeOperation(oid, operation);
 };

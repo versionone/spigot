@@ -6,6 +6,7 @@ import request from 'superagent';
 import trickle from 'timetrickle';
 import url from 'url';
 import { V1Meta } from 'v1sdk';
+import Oid from 'v1sdk/dist/Oid';
 import when from 'when';
 
 export default class Spigot {
@@ -44,23 +45,19 @@ export default class Spigot {
                 console.log(c);
                 this.commands[c.command](v1, c)
                     .then(results => {
-                        console.log(results);
                         const assets = Array.isArray(results) ? results : [results];
                         assets.forEach((asset, i) => {
-                            console.log(asset);
-                            //p.then(asset => {
-                                const newStreamVariables = [];
-                                if (asset && asset.name && i)
-                                    newStreamVariables.push(`${asset.name} ${i}`);
-                                if (asset && asset.name)
-                                    newStreamVariables.push(asset.name);
-                                if (asset && asset.assetType)
-                                    newStreamVariables.push(asset.type);
-                                newStreamVariables.forEach(variable => {
-                                    this.streamVariables[variable] = asset.oid;
-                                });
-                                callback(null, asset);
-                            //});
+                            const newStreamVariables = [];
+                            if (asset && asset.name && i)
+                                newStreamVariables.push(`${asset.name} ${i}`);
+                            if (asset && asset.name)
+                                newStreamVariables.push(asset.name);
+                            if (asset && asset.assetType)
+                                newStreamVariables.push(asset.type);
+                            newStreamVariables.forEach(variable => {
+                                this.streamVariables[variable] = asset.oid;
+                            });
+                            callback(null, asset);
                         });
                     })
                     .catch(error => {
@@ -147,15 +144,13 @@ const getV1Instance = (v1Url, username, password) => {
         protocol: protocol,
         username: username,
         password: password,
-        postFn: (url, data, headerObj) => Promise.resolve(
+        postFn: (url, data, headerObj) => new Promise(
             (resolve, reject) => {
-                console.log(url, data, headerObj);
                 request
                     .post(url)
                     .send(data)
                     .set(headerObj)
                     .end((error, response) => {
-                        console.log(response.body);
                         error ? reject(error) : resolve(response.body);
                     });
             }
@@ -166,41 +161,16 @@ const getV1Instance = (v1Url, username, password) => {
 const create = (v1, command) => {
     const { assetType, attributes, times } = command;
     const Times = Array.apply(null, { length: (times || 1) }).map(Number.call, Number);
-    return Promise.all(Times.map(() => Promise.resolve(
-        (resolve, reject) => {
-            resolve(v1.create(assetType, attributes))
-        }
-    )));
+    return Promise.all(Times.map(() => v1.create(assetType, attributes)));
 };
 
 const update = (v1, command) => {
-    const {oid, attributes} = command;
-    return Promise.resolve((resolve, reject) => {
-        v1.update(oid, attributes)
-            .then(rawResult => {
-                if (!rawResult) {
-                    reject(new Error())
-                }
-                resolve(rawResult._v1_current_data);
-            })
-            .catch(error => {
-                reject(error);
-            });
-    });
+    const { oid, attributes } = command;
+    const { idNumber, type } = new Oid(oid);
+    return v1.update(idNumber, type, attributes, '')
 };
 
 const execute = (v1, command) => {
     const { oid, operation } = command;
-    return Promise.resolve((resolve, reject) => {
-        v1.executeOperation(oid, operation)
-            .then(rawResult => {
-                if (!rawResult) {
-                    reject(new Error());
-                }
-                resolve(rawResult._v1_current_data);
-            })
-            .catch(error => {
-                reject(error);
-            });
-    });
+    return v1.executeOperation(oid, operation);
 };
