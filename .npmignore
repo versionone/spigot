@@ -1,5 +1,6 @@
-src/
 .DS_Store
 .idea
-.get
+.git
 npm-debug.log
+samples/
+src/

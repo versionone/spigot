@@ -20,9 +20,9 @@ var _timetrickle = require('timetrickle');
 
 var _timetrickle2 = _interopRequireDefault(_timetrickle);
 
-var _v = require('./v1');
+var _v1jssdk = require('v1jssdk');
 
-var _v2 = _interopRequireDefault(_v);
+var _v1jssdk2 = _interopRequireDefault(_v1jssdk);
 
 var _when = require('when');
 
@@ -74,29 +74,45 @@ var Spigot = function Spigot(_ref) {
             var times = command.times;
 
             var Times = Array.apply(null, { length: times || 1 }).map(Number.call, Number);
-            Promise.all(Times.map(function () {
+            return Promise.all(Times.map(function () {
                 return new Promise(function (resolve, reject) {
-                    v1.create(assetType, attributes, function (err, asset) {
-                        resolve({ err: err, asset: asset });
+                    v1.create(assetType, attributes).then(function (asset) {
+                        resolve(asset);
                     });
                 });
-            })).then(function (results) {
-                results.forEach(function (r, i) {
-                    return callback(r.err, r.asset, i);
-                });
-            });
+            })); /*.then(results => {
+                  results.forEach((r, i) => callback(r.err, r.asset, i));
+                 });*/
         },
-        update: function update(v1, command, callback) {
+        update: function update(v1, command) {
             var oid = command.oid;
             var attributes = command.attributes;
 
-            v1.update(oid, attributes, callback);
+            return Promise.resolve(function (resolve, reject) {
+                v1.update(oid, attributes).then(function (rawResult) {
+                    if (!rawResult) {
+                        reject(new Error());
+                    }
+                    resolve(rawResult._v1_current_data);
+                }).catch(function (error) {
+                    reject(error);
+                });
+            });
         },
-        execute: function execute(v1, command, callback) {
+        execute: function execute(v1, command) {
             var oid = command.oid;
             var operation = command.operation;
 
-            v1.executeOperation(oid, operation, callback);
+            return Promise.resolve(function (resolve, reject) {
+                v1.executeOperation(oid, operation).then(function (rawResult) {
+                    if (!rawResult) {
+                        reject(new Error());
+                    }
+                    resolve(rawResult._v1_current_data);
+                }).catch(function (error) {
+                    reject(error);
+                });
+            });
         }
     };
 
@@ -110,11 +126,7 @@ var Spigot = function Spigot(_ref) {
             var b = _mustache2.default.render(a, _this.streamVariables);
             var c = JSON.parse(b);
             console.log(c);
-            _this.commands[c.command](v1, c, function (err, asset, i) {
-                if (err) {
-                    console.log(err);
-                    return callback(err);
-                }
+            _this.commands[c.command](v1, c).then(function (asset, i) {
                 var newStreamVariables = [];
                 if (asset && asset.name && i) newStreamVariables.push(asset.name + ' ' + i);
                 if (asset && asset.name) newStreamVariables.push(asset.name);
@@ -122,7 +134,10 @@ var Spigot = function Spigot(_ref) {
                 newStreamVariables.forEach(function (variable) {
                     _this.streamVariables[variable] = asset.oid;
                 });
-                callback(err, asset);
+                callback(null, asset);
+            }).catch(function (error) {
+                console.log(error);
+                callback(error);
             });
         });
     };
@@ -153,7 +168,7 @@ var Spigot = function Spigot(_ref) {
         var password = data.password || _this.password;
         var executableCommands = data.commands.map(function (command) {
             return function () {
-                var v1 = new _v2.default(url, username, password);
+                var v1 = getV1Instance(url, username, password);
                 var promiseExecute = _node2.default.call(_this.execute, _this, v1, command);
                 promiseExecute.done(function () {
                     ++_this.totalSent;
@@ -193,3 +208,23 @@ var Spigot = function Spigot(_ref) {
 };
 
 exports.default = Spigot;
+
+var getV1Instance = function getV1Instance(v1Url, username, password) {
+    var urlInfo = url.parse(v1Url);
+    var hostname = urlInfo.hostname;
+    var instance = urlInfo.pathname.replace('/', '');
+    var protocol = urlInfo.protocol.replace(':', '');
+    var port = urlInfo.port;
+    if (!urlInfo.port) port = protocol == "https" ? 443 : 80;
+
+    return new _v1jssdk2.default.V1Meta({
+        hostname: hostname,
+        instance: instance,
+        port: port,
+        protocol: protocol,
+        username: username,
+        password: password,
+        post: function post(url, data, headerObj) {},
+        get: function get(url, data) {}
+    });
+};

@@ -23,8 +23,8 @@ exports.default = function (cmdArgs, data) {
     var forever = cmdArgs.forever;
     var parallel = cmdArgs.parallel;
 
-    var v1Url = url || 'http://localhost/VersionOne.Web/';
 
+    var v1Url = url || 'http://localhost/VersionOne.Web/';
     var spigot = new _spigot2.default({
         url: v1Url,
         username: username,
