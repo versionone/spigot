@@ -1,10 +1,13 @@
 import Mustache from 'mustache';
+import node from 'when/node';
 import parallel from 'when/parallel';
 import sequence from 'when/sequence';
+import request from 'superagent';
 import trickle from 'timetrickle';
-import V1 from './v1';
+import url from 'url';
+import { V1Meta } from 'v1sdk';
+import Oid from 'v1sdk/dist/Oid';
 import when from 'when';
-import node from 'when/node';
 
 export default class Spigot {
     constructor({ url, username, password, forever, throttle, throttleInterval }) {
@@ -24,27 +27,9 @@ export default class Spigot {
         };
 
         this.commands = {
-            create: (v1, command, callback) => {
-                const { assetType, attributes, times } = command;
-                const Times = Array.apply(null, { length: (times || 1) }).map(Number.call, Number)
-                Promise.all(Times.map(() => new Promise(
-                    (resolve, reject) => {
-                        v1.create(assetType, attributes, (err, asset) => {
-                            resolve({ err: err, asset: asset });
-                        });
-                    }
-                ))).then(results => {
-                    results.forEach((r, i) => callback(r.err, r.asset, i));
-                });
-            },
-            update: (v1, command, callback) => {
-                const { oid, attributes } = command;
-                v1.update(oid, attributes, callback);
-            },
-            execute: (v1, command, callback) => {
-                const { oid, operation } = command;
-                v1.executeOperation(oid, operation, callback);
-            }
+            create: create,
+            update: update,
+            execute: execute
         };
 
         this.throttler = this.throttle
@@ -58,23 +43,27 @@ export default class Spigot {
                 const b = Mustache.render(a, this.streamVariables);
                 const c = JSON.parse(b);
                 console.log(c);
-                this.commands[c.command](v1, c, (err, asset, i) => {
-                    if (err) {
-                        console.log(err);
-                        return callback(err);
-                    }
-                    let newStreamVariables = [];
-                    if (asset && asset.name && i)
-                        newStreamVariables.push(`${asset.name} ${i}`);
-                    if (asset && asset.name)
-                        newStreamVariables.push(asset.name);
-                    if (asset && asset.assetType)
-                        newStreamVariables.push(asset.type);
-                    newStreamVariables.forEach(variable => {
-                        this.streamVariables[variable] = asset.oid;
+                this.commands[c.command](v1, c)
+                    .then(results => {
+                        const assets = Array.isArray(results) ? results : [results];
+                        assets.forEach((asset, i) => {
+                            const newStreamVariables = [];
+                            if (asset && asset.name && i)
+                                newStreamVariables.push(`${asset.name} ${i}`);
+                            if (asset && asset.name)
+                                newStreamVariables.push(asset.name);
+                            if (asset && asset.assetType)
+                                newStreamVariables.push(asset.type);
+                            newStreamVariables.forEach(variable => {
+                                this.streamVariables[variable] = asset.oid;
+                            });
+                            callback(null, asset);
+                        });
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        callback(error)
                     });
-                    callback(err, asset);
-                });
             });
         };
         this.startRateWatcher = totalCommands => {
@@ -103,7 +92,7 @@ export default class Spigot {
             const username = data.username || this.username;
             const password = data.password || this.password;
             const executableCommands = data.commands.map(command => () => {
-                const v1 = new V1(url, username, password);
+                const v1 = getV1Instance(url, username, password);
                 const promiseExecute = node.call(this.execute, this, v1, command);
                 promiseExecute.done(() => {
                     ++this.totalSent;
@@ -139,3 +128,49 @@ export default class Spigot {
         };
     };
 }
+const getV1Instance = (v1Url, username, password) => {
+    const urlInfo = url.parse(v1Url);
+    const hostname = urlInfo.hostname;
+    const instance = urlInfo.pathname.replace('/', '');
+    const protocol = urlInfo.protocol.replace(':', '');
+    let port = urlInfo.port;
+    if (!urlInfo.port)
+        port = protocol == "https" ? 443 : 80;
+
+    return new V1Meta({
+        hostname: hostname,
+        instance: instance,
+        port: port,
+        protocol: protocol,
+        username: username,
+        password: password,
+        postFn: (url, data, headerObj) => new Promise(
+            (resolve, reject) => {
+                request
+                    .post(url)
+                    .send(data)
+                    .set(headerObj)
+                    .end((error, response) => {
+                        error ? reject(error) : resolve(response.body);
+                    });
+            }
+        )
+    });
+};
+
+const create = (v1, command) => {
+    const { assetType, attributes, times } = command;
+    const Times = Array.apply(null, { length: (times || 1) }).map(Number.call, Number);
+    return Promise.all(Times.map(() => v1.create(assetType, attributes)));
+};
+
+const update = (v1, command) => {
+    const { oid, attributes } = command;
+    const { idNumber, type } = new Oid(oid);
+    return v1.update(idNumber, type, attributes, '')
+};
+
+const execute = (v1, command) => {
+    const { oid, operation } = command;
+    return v1.executeOperation(oid, operation);
+};

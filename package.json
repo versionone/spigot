@@ -26,7 +26,7 @@
     "nopt": "^2.2.0",
     "superagent": "^2.0.0",
     "timetrickle": "^0.1.1",
-    "v1jssdk": "git+ssh://git@github.com:dangilkerson/VersionOne.SDK.Javascript.git",
+    "v1sdk": "^1.0.9",
     "when": "~3.0.1"
   },
   "devDependencies": {

@@ -50,8 +50,8 @@ var getAssetType = function getAssetType(command) {
 
 var getMetaDefinitions = function getMetaDefinitions(url, sampleData) {
     var data = Array.isArray(sampleData) ? sampleData : [sampleData];
-    var unqiueAssetTypes = getAssetTypes(data);
-    return Promise.all(unqiueAssetTypes.map(function (assetType) {
+    var uniqueAssetTypes = getAssetTypes(data);
+    return Promise.all(uniqueAssetTypes.map(function (assetType) {
         return new Promise(function (resolve, reject) {
             var root = url.slice(-1) === '/' ? url : url + '/';
             var metaV1Url = root + 'meta.v1/' + assetType;
