@@ -8,6 +8,10 @@ var _mustache = require('mustache');
 
 var _mustache2 = _interopRequireDefault(_mustache);
 
+var _node = require('when/node');
+
+var _node2 = _interopRequireDefault(_node);
+
 var _parallel = require('when/parallel');
 
 var _parallel2 = _interopRequireDefault(_parallel);
@@ -16,21 +20,23 @@ var _sequence = require('when/sequence');
 
 var _sequence2 = _interopRequireDefault(_sequence);
 
+var _superagent = require('superagent');
+
+var _superagent2 = _interopRequireDefault(_superagent);
+
 var _timetrickle = require('timetrickle');
 
 var _timetrickle2 = _interopRequireDefault(_timetrickle);
 
-var _v1jssdk = require('v1jssdk');
+var _url = require('url');
 
-var _v1jssdk2 = _interopRequireDefault(_v1jssdk);
+var _url2 = _interopRequireDefault(_url);
+
+var _v1sdk = require('v1sdk');
 
 var _when = require('when');
 
 var _when2 = _interopRequireDefault(_when);
-
-var _node = require('when/node');
-
-var _node2 = _interopRequireDefault(_node);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -68,52 +74,9 @@ var Spigot = function Spigot(_ref) {
     };
 
     this.commands = {
-        create: function create(v1, command, callback) {
-            var assetType = command.assetType;
-            var attributes = command.attributes;
-            var times = command.times;
-
-            var Times = Array.apply(null, { length: times || 1 }).map(Number.call, Number);
-            return Promise.all(Times.map(function () {
-                return new Promise(function (resolve, reject) {
-                    v1.create(assetType, attributes).then(function (asset) {
-                        resolve(asset);
-                    });
-                });
-            })); /*.then(results => {
-                  results.forEach((r, i) => callback(r.err, r.asset, i));
-                 });*/
-        },
-        update: function update(v1, command) {
-            var oid = command.oid;
-            var attributes = command.attributes;
-
-            return Promise.resolve(function (resolve, reject) {
-                v1.update(oid, attributes).then(function (rawResult) {
-                    if (!rawResult) {
-                        reject(new Error());
-                    }
-                    resolve(rawResult._v1_current_data);
-                }).catch(function (error) {
-                    reject(error);
-                });
-            });
-        },
-        execute: function execute(v1, command) {
-            var oid = command.oid;
-            var operation = command.operation;
-
-            return Promise.resolve(function (resolve, reject) {
-                v1.executeOperation(oid, operation).then(function (rawResult) {
-                    if (!rawResult) {
-                        reject(new Error());
-                    }
-                    resolve(rawResult._v1_current_data);
-                }).catch(function (error) {
-                    reject(error);
-                });
-            });
-        }
+        create: create,
+        update: update,
+        execute: execute
     };
 
     this.throttler = this.throttle ? (0, _timetrickle2.default)(this.throttle, this.throttleInterval || 1000) : function (func) {
@@ -126,15 +89,23 @@ var Spigot = function Spigot(_ref) {
             var b = _mustache2.default.render(a, _this.streamVariables);
             var c = JSON.parse(b);
             console.log(c);
-            _this.commands[c.command](v1, c).then(function (asset, i) {
-                var newStreamVariables = [];
-                if (asset && asset.name && i) newStreamVariables.push(asset.name + ' ' + i);
-                if (asset && asset.name) newStreamVariables.push(asset.name);
-                if (asset && asset.assetType) newStreamVariables.push(asset.type);
-                newStreamVariables.forEach(function (variable) {
-                    _this.streamVariables[variable] = asset.oid;
+            _this.commands[c.command](v1, c).then(function (results) {
+                console.log(results);
+                var assets = Array.isArray(results) ? results : [results];
+                assets.forEach(function (p, i) {
+                    console.log(p);
+                    //p.then(asset => {
+                    console.log(asset);
+                    var newStreamVariables = [];
+                    if (asset && asset.name && i) newStreamVariables.push(asset.name + ' ' + i);
+                    if (asset && asset.name) newStreamVariables.push(asset.name);
+                    if (asset && asset.assetType) newStreamVariables.push(asset.type);
+                    newStreamVariables.forEach(function (variable) {
+                        _this.streamVariables[variable] = asset.oid;
+                    });
+                    callback(null, asset);
+                    //});
                 });
-                callback(null, asset);
             }).catch(function (error) {
                 console.log(error);
                 callback(error);
@@ -210,21 +181,73 @@ var Spigot = function Spigot(_ref) {
 exports.default = Spigot;
 
 var getV1Instance = function getV1Instance(v1Url, username, password) {
-    var urlInfo = url.parse(v1Url);
+    var urlInfo = _url2.default.parse(v1Url);
     var hostname = urlInfo.hostname;
     var instance = urlInfo.pathname.replace('/', '');
     var protocol = urlInfo.protocol.replace(':', '');
     var port = urlInfo.port;
     if (!urlInfo.port) port = protocol == "https" ? 443 : 80;
 
-    return new _v1jssdk2.default.V1Meta({
+    return new _v1sdk.V1Meta({
         hostname: hostname,
         instance: instance,
         port: port,
         protocol: protocol,
         username: username,
         password: password,
-        post: function post(url, data, headerObj) {},
-        get: function get(url, data) {}
+        postFn: function postFn(url, data, headerObj) {
+            return Promise.resolve(function (resolve, reject) {
+                console.log(url, data, headerObj);
+                _superagent2.default.post(url).send(data).set(headerObj).end(function (error, response) {
+                    console.log(response.body);
+                    error ? reject(error) : resolve(response.body);
+                });
+            });
+        }
+    });
+};
+
+var create = function create(v1, command) {
+    var assetType = command.assetType;
+    var attributes = command.attributes;
+    var times = command.times;
+
+    var Times = Array.apply(null, { length: times || 1 }).map(Number.call, Number);
+    return Promise.all(Times.map(function () {
+        return Promise.resolve(function (resolve, reject) {
+            resolve(v1.create(assetType, attributes));
+        });
+    }));
+};
+
+var update = function update(v1, command) {
+    var oid = command.oid;
+    var attributes = command.attributes;
+
+    return Promise.resolve(function (resolve, reject) {
+        v1.update(oid, attributes).then(function (rawResult) {
+            if (!rawResult) {
+                reject(new Error());
+            }
+            resolve(rawResult._v1_current_data);
+        }).catch(function (error) {
+            reject(error);
+        });
+    });
+};
+
+var execute = function execute(v1, command) {
+    var oid = command.oid;
+    var operation = command.operation;
+
+    return Promise.resolve(function (resolve, reject) {
+        v1.executeOperation(oid, operation).then(function (rawResult) {
+            if (!rawResult) {
+                reject(new Error());
+            }
+            resolve(rawResult._v1_current_data);
+        }).catch(function (error) {
+            reject(error);
+        });
     });
 };
