@@ -77,7 +77,7 @@ spigot --url <url> --username <username> --password <password> --throttle <event
 {
     "commands": [{
         "command": "create",
-        "times": "5"
+        "times": "5",
         "assetType": "Story",
         "attributes": {
             "Name": "StoryName",
