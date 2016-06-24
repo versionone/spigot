@@ -1,5 +1,6 @@
 import request from 'superagent';
 import btoa from 'btoa';
+import Oid from 'v1sdk/dist/Oid';
 
 export default (url, sampleData) => new Promise(
     (resolve, reject) => {
@@ -22,8 +23,8 @@ const getAssetTypes = data => {
 const getAssetType = command => {
     const map = {
         'create': command => command.assetType,
-        'update': command => command.oid.split(':')[0],
-        'execute': command => command.oid.split(':')[0]
+        'update': command => new Oid(command.oid).type,
+        'execute': command => new Oid(command.oid).type
     };
     return map[command.command](command);
 };

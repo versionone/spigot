@@ -12,6 +12,10 @@ var _btoa = require('btoa');
 
 var _btoa2 = _interopRequireDefault(_btoa);
 
+var _Oid = require('v1sdk/dist/Oid');
+
+var _Oid2 = _interopRequireDefault(_Oid);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = function (url, sampleData) {
@@ -39,10 +43,10 @@ var getAssetType = function getAssetType(command) {
             return command.assetType;
         },
         'update': function update(command) {
-            return command.oid.split(':')[0];
+            return new _Oid2.default(command.oid).type;
         },
         'execute': function execute(command) {
-            return command.oid.split(':')[0];
+            return new _Oid2.default(command.oid).type;
         }
     };
     return map[command.command](command);
