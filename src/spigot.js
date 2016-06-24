@@ -2,10 +2,8 @@ import Mustache from 'mustache';
 import node from 'when/node';
 import parallel from 'when/parallel';
 import sequence from 'when/sequence';
-import request from 'superagent';
 import trickle from 'timetrickle';
-import url from 'url';
-import { V1Meta } from 'v1sdk';
+import V1 from './v1';
 import Oid from 'v1sdk/dist/Oid';
 import when from 'when';
 
@@ -92,7 +90,7 @@ export default class Spigot {
             const username = data.username || this.username;
             const password = data.password || this.password;
             const executableCommands = data.commands.map(command => () => {
-                const v1 = getV1Instance(url, username, password);
+                const v1 = V1(url, username, password);
                 const promiseExecute = node.call(this.execute, this, v1, command);
                 promiseExecute.done(() => {
                     ++this.totalSent;
@@ -128,35 +126,6 @@ export default class Spigot {
         };
     };
 }
-const getV1Instance = (v1Url, username, password) => {
-    const urlInfo = url.parse(v1Url);
-    const hostname = urlInfo.hostname;
-    const instance = urlInfo.pathname.replace('/', '');
-    const protocol = urlInfo.protocol.replace(':', '');
-    let port = urlInfo.port;
-    if (!urlInfo.port)
-        port = protocol == "https" ? 443 : 80;
-
-    return new V1Meta({
-        hostname: hostname,
-        instance: instance,
-        port: port,
-        protocol: protocol,
-        username: username,
-        password: password,
-        postFn: (url, data, headerObj) => new Promise(
-            (resolve, reject) => {
-                request
-                    .post(url)
-                    .send(data)
-                    .set(headerObj)
-                    .end((error, response) => {
-                        error ? reject(error) : resolve(response.body);
-                    });
-            }
-        )
-    });
-};
 
 const create = (v1, command) => {
     const { assetType, attributes, times } = command;

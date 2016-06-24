@@ -20,19 +20,13 @@ var _sequence = require('when/sequence');
 
 var _sequence2 = _interopRequireDefault(_sequence);
 
-var _superagent = require('superagent');
-
-var _superagent2 = _interopRequireDefault(_superagent);
-
 var _timetrickle = require('timetrickle');
 
 var _timetrickle2 = _interopRequireDefault(_timetrickle);
 
-var _url = require('url');
+var _v = require('./v1');
 
-var _url2 = _interopRequireDefault(_url);
-
-var _v1sdk = require('v1sdk');
+var _v2 = _interopRequireDefault(_v);
 
 var _Oid = require('v1sdk/dist/Oid');
 
@@ -138,7 +132,7 @@ var Spigot = function Spigot(_ref) {
         var password = data.password || _this.password;
         var executableCommands = data.commands.map(function (command) {
             return function () {
-                var v1 = getV1Instance(url, username, password);
+                var v1 = (0, _v2.default)(url, username, password);
                 var promiseExecute = _node2.default.call(_this.execute, _this, v1, command);
                 promiseExecute.done(function () {
                     ++_this.totalSent;
@@ -179,30 +173,6 @@ var Spigot = function Spigot(_ref) {
 
 exports.default = Spigot;
 
-var getV1Instance = function getV1Instance(v1Url, username, password) {
-    var urlInfo = _url2.default.parse(v1Url);
-    var hostname = urlInfo.hostname;
-    var instance = urlInfo.pathname.replace('/', '');
-    var protocol = urlInfo.protocol.replace(':', '');
-    var port = urlInfo.port;
-    if (!urlInfo.port) port = protocol == "https" ? 443 : 80;
-
-    return new _v1sdk.V1Meta({
-        hostname: hostname,
-        instance: instance,
-        port: port,
-        protocol: protocol,
-        username: username,
-        password: password,
-        postFn: function postFn(url, data, headerObj) {
-            return new Promise(function (resolve, reject) {
-                _superagent2.default.post(url).send(data).set(headerObj).end(function (error, response) {
-                    error ? reject(error) : resolve(response.body);
-                });
-            });
-        }
-    });
-};
 
 var create = function create(v1, command) {
     var assetType = command.assetType;
