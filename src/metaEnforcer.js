@@ -1,5 +1,4 @@
-import request from 'superagent';
-import btoa from 'btoa';
+import V1 from './v1'
 import Oid from 'v1sdk/dist/Oid';
 
 const getMetaDefinitionFrom = (command, metaDefinitions) => {
@@ -25,22 +24,10 @@ const getAssetTypes = data => {
         .filter((value, index, array) => (index === 0) || (value !== array[index-1]));
 };
 
-const getMetaDefinitions = (url, sampleData) => {
+const getMetaDefinitions = (v1, sampleData) => {
     const data = Array.isArray(sampleData) ? sampleData : [sampleData];
     const uniqueAssetTypes = getAssetTypes(data);
-    return Promise.all(uniqueAssetTypes.map(assetType => {
-        return new Promise((resolve, reject) => {
-            const root = url.slice(-1) === '/' ? url : `${url}/`;
-            const metaV1Url = `${root}meta.v1/${assetType}`;
-            request
-                .get(metaV1Url)
-                .set('Authorization', `Basic ${btoa("admin:admin")}`)
-                .set('Accept', 'application/json')
-                .end((err, response) => {
-                    resolve(response.body);
-                });
-        });
-    }));
+    return Promise.all(uniqueAssetTypes.map(assetType => v1.queryDefinition(assetType)));
 };
 
 const getKnownAttributes = (command, metaDefinition) => {
@@ -106,7 +93,8 @@ const formatCommands = (intents, metaDefinitions) => {
 
 export default (url, sampleData) => new Promise(
     (resolve, reject) => {
-        getMetaDefinitions(url, sampleData).then((metaDefinitions, err) => {
+        const v1 = V1(url, 'admin', 'admin');
+        getMetaDefinitions(v1, sampleData).then((metaDefinitions, err) => {
             const transformedSampleData = formatCommands(sampleData, metaDefinitions);
             resolve(transformedSampleData);
         });

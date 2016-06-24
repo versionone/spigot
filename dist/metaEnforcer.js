@@ -4,13 +4,9 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _superagent = require('superagent');
+var _v = require('./v1');
 
-var _superagent2 = _interopRequireDefault(_superagent);
-
-var _btoa = require('btoa');
-
-var _btoa2 = _interopRequireDefault(_btoa);
+var _v2 = _interopRequireDefault(_v);
 
 var _Oid = require('v1sdk/dist/Oid');
 
@@ -50,17 +46,11 @@ var getAssetTypes = function getAssetTypes(data) {
     });
 };
 
-var getMetaDefinitions = function getMetaDefinitions(url, sampleData) {
+var getMetaDefinitions = function getMetaDefinitions(v1, sampleData) {
     var data = Array.isArray(sampleData) ? sampleData : [sampleData];
     var uniqueAssetTypes = getAssetTypes(data);
     return Promise.all(uniqueAssetTypes.map(function (assetType) {
-        return new Promise(function (resolve, reject) {
-            var root = url.slice(-1) === '/' ? url : url + '/';
-            var metaV1Url = root + 'meta.v1/' + assetType;
-            _superagent2.default.get(metaV1Url).set('Authorization', 'Basic ' + (0, _btoa2.default)("admin:admin")).set('Accept', 'application/json').end(function (err, response) {
-                resolve(response.body);
-            });
-        });
+        return v1.queryDefinition(assetType);
     }));
 };
 
@@ -131,7 +121,8 @@ var formatCommands = function formatCommands(intents, metaDefinitions) {
 
 exports.default = function (url, sampleData) {
     return new Promise(function (resolve, reject) {
-        getMetaDefinitions(url, sampleData).then(function (metaDefinitions, err) {
+        var v1 = (0, _v2.default)(url, 'admin', 'admin');
+        getMetaDefinitions(v1, sampleData).then(function (metaDefinitions, err) {
             var transformedSampleData = formatCommands(sampleData, metaDefinitions);
             resolve(transformedSampleData);
         });

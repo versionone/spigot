@@ -1,0 +1,35 @@
+{
+    "username": "admin",
+    "password": "admin",
+
+    "commands": [
+        {
+            "command": "create",
+            "assetType": "Story",
+            "attributes": {
+                "Name": "Story 1",
+                "Scope": "Scope:0",
+                "Bad Create Attribute": "unknown attribute"
+            }
+        },
+        {
+            "command": "update",
+            "oid": "Story:1003",
+            "attributes": {
+                "Name": "Rename Story 1",
+                "Scope": "Scope:0",
+                "Bad Update Attribute": "unknown attribute"
+            }
+        },
+        {
+            "command": "execute",
+            "oid": "Story:1003",
+            "operation": "Unknown Operation"
+        },
+        {
+            "command": "execute",
+            "oid": "Story:1003",
+            "operation": "Inactivate"
+        }
+    ]
+}

@@ -28,6 +28,17 @@ export default (v1Url, username, password) => {
                         error ? reject(error) : resolve(response.body);
                     });
             }
+        ),
+        getFn: (url, data, headerObj) => new Promise(
+            (resolve, reject) => {
+                request
+                    .get(url)
+                    .send(data)
+                    .set(headerObj)
+                    .end((error, response) => {
+                        error ? reject(error) : resolve(response.body);
+                    });
+            }
         )
     });
 };

@@ -37,6 +37,13 @@ exports.default = function (v1Url, username, password) {
                     error ? reject(error) : resolve(response.body);
                 });
             });
+        },
+        getFn: function getFn(url, data, headerObj) {
+            return new Promise(function (resolve, reject) {
+                _superagent2.default.get(url).send(data).set(headerObj).end(function (error, response) {
+                    error ? reject(error) : resolve(response.body);
+                });
+            });
         }
     });
 };

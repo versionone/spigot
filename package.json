@@ -21,12 +21,11 @@
   },
   "homepage": "https://github.com/versionone/spigot",
   "dependencies": {
-    "btoa": "^1.1.2",
     "mustache": "~0.8.1",
     "nopt": "^2.2.0",
     "superagent": "^2.0.0",
     "timetrickle": "^0.1.1",
-    "v1sdk": "^1.0.9",
+    "v1sdk": "^1.1.9",
     "when": "~3.0.1"
   },
   "devDependencies": {
