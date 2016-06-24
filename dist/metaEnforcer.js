@@ -21,7 +21,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = function (url, sampleData) {
     return new Promise(function (resolve, reject) {
         getMetaDefinitions(url, sampleData).then(function (metaDefinitions, err) {
-            var transformedSampleData = dropUnknownAttributes(sampleData, metaDefinitions);
+            var transformedSampleData = formatCommands(sampleData, metaDefinitions);
             resolve(transformedSampleData);
         });
     });
@@ -66,40 +66,74 @@ var getMetaDefinitions = function getMetaDefinitions(url, sampleData) {
     }));
 };
 
-var dropUnknownAttributes = function dropUnknownAttributes(sampleData, metaDefinitions) {
-    var commandsToDrop = [];
-    sampleData.forEach(function (intent) {
-        intent.commands.forEach(function (command) {
-            var assetType = getAssetType(command);
-            var metaDefinition = metaDefinitions.find(function (metaDef) {
-                return metaDef.Token === assetType;
-            });
-
-            var commandType = command.command;
-
-            if (commandType === 'create' || commandType === 'update') {
-                var attributes = command.attributes || [];
-                for (var attribute in attributes) {
-                    var AssetAttribute = assetType + '.' + attribute;
-                    if (!metaDefinition.Attributes[AssetAttribute]) {
-                        console.log("========>", "drop unknown attribute", AssetAttribute);
-                        delete attributes[attribute];
-                    }
-                }
-            } else if (commandType === 'execute') {
-                var AssetOperation = assetType + '.' + command.operation;
-                if (!metaDefinition.Operations[AssetOperation]) {
-                    console.log("========>", "drop unknown operation", AssetOperation);
-                    commandsToDrop.push(command);
-                }
-            }
-        });
+var getMetaDefinitionFrom = function getMetaDefinitionFrom(command, metaDefinitions) {
+    var assetType = getAssetType(command);
+    return metaDefinitions.find(function (metaDef) {
+        return metaDef.Token === assetType;
     });
+};
 
-    sampleData.forEach(function (intent) {
-        intent.commands = intent.commands.filter(function (command) {
-            return commandsToDrop.indexOf(command) <= -1;
+var formatCommands = function formatCommands(intents, metaDefinitions) {
+    return intents.map(function (intent) {
+        intent.commands = intent.commands.map(function (command) {
+            return getFormattedCommand(command, metaDefinitions);
+        }).filter(function (command) {
+            return command.command !== 'execute' || command.command === 'execute' && shouldNotDropOperation(command, metaDefinitions);
         });
+        return intent;
     });
-    return sampleData;
+};
+
+var getFormattedCommand = function getFormattedCommand(command, metaDefinitions) {
+    var metaDefinition = getMetaDefinitionFrom(command, metaDefinitions);
+    var commandType = command.command;
+
+    var commandFormatMap = {
+        'update': formatUpdateCommand,
+        'create': formatCreateCommand,
+        'execute': function execute(command) {
+            return command;
+        }
+    };
+
+    return commandFormatMap[commandType](command, metaDefinition);
+};
+
+var formatUpdateCommand = function formatUpdateCommand(command, metaDefinition) {
+    return {
+        'command': command.command,
+        'oid': command.oid,
+        'attributes': getKnownAttributes(command, metaDefinition)
+    };
+};
+
+var formatCreateCommand = function formatCreateCommand(command, metaDefinition) {
+    return {
+        'command': command.command,
+        'assetType': command.assetType,
+        'attributes': getKnownAttributes(command, metaDefinition)
+    };
+};
+
+var getKnownAttributes = function getKnownAttributes(command, metaDefinition) {
+    var knownAttributes = {};
+    for (var attribute in command.attributes || []) {
+        var AssetAttribute = metaDefinition.Token + '.' + attribute;
+        if (metaDefinition.Attributes[AssetAttribute]) {
+            knownAttributes[attribute] = command.attributes[attribute];
+        } else {
+            console.log("========>", "drop unknown attribute", AssetAttribute);
+        }
+    }
+    return knownAttributes;
+};
+
+var shouldNotDropOperation = function shouldNotDropOperation(command, metaDefinitions) {
+    var metaDefinition = getMetaDefinitionFrom(command, metaDefinitions);
+    var AssetOperation = metaDefinition.Token + '.' + command.operation;
+    var shouldNotDrop = metaDefinition.Operations[AssetOperation];
+    if (!shouldNotDrop) {
+        console.log("========>", "drop unknown operation", AssetOperation);
+    }
+    return shouldNotDrop;
 };

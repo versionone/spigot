@@ -5,7 +5,7 @@ import Oid from 'v1sdk/dist/Oid';
 export default (url, sampleData) => new Promise(
     (resolve, reject) => {
         getMetaDefinitions(url, sampleData).then((metaDefinitions, err) => {
-            const transformedSampleData = dropUnknownAttributes(sampleData, metaDefinitions);
+            const transformedSampleData = formatCommands(sampleData, metaDefinitions);
             resolve(transformedSampleData);
         });
     }
@@ -47,38 +47,68 @@ const getMetaDefinitions = (url, sampleData) => {
     }));
 };
 
-const dropUnknownAttributes = (sampleData, metaDefinitions) => {
-    const commandsToDrop = [];
-    sampleData.forEach(intent => {
-        intent.commands.forEach(command => {
-            const assetType = getAssetType(command);
-            const metaDefinition = metaDefinitions.find(metaDef => metaDef.Token === assetType);
+const getMetaDefinitionFrom = (command, metaDefinitions) => {
+    const assetType = getAssetType(command);
+    return metaDefinitions.find(metaDef => metaDef.Token === assetType);
+};
 
-            const commandType = command.command;
-
-            if(commandType === 'create' || commandType === 'update') {
-                const attributes = command.attributes || [];
-                for(var attribute in attributes) {
-                    const AssetAttribute = `${assetType}.${attribute}`;
-                    if(!metaDefinition.Attributes[AssetAttribute]) {
-                        console.log("========>", "drop unknown attribute", AssetAttribute);
-                        delete attributes[attribute]
-                    }
-                }
-            }
-            else if(commandType === 'execute') {
-                const AssetOperation = `${assetType}.${command.operation}`;
-                if(!metaDefinition.Operations[AssetOperation]) {
-                    console.log("========>", "drop unknown operation", AssetOperation);
-                    commandsToDrop.push(command);
-                }
-            }
-
-        });
+const formatCommands = (intents, metaDefinitions) => {
+    return intents.map(intent => {
+        intent.commands = intent.commands
+            .map(command => getFormattedCommand(command, metaDefinitions))
+            .filter(command => (
+                    command.command !== 'execute'
+                    || (command.command === 'execute' && shouldNotDropOperation(command, metaDefinitions))
+                )
+            );
+        return intent;
     });
+};
 
-    sampleData.forEach(intent => {
-        intent.commands = intent.commands.filter(command => commandsToDrop.indexOf(command) <= -1)
-    });
-    return sampleData;
+const getFormattedCommand = (command, metaDefinitions) => {
+    const metaDefinition = getMetaDefinitionFrom(command, metaDefinitions);
+    const commandType = command.command;
+
+    const commandFormatMap = {
+        'update': formatUpdateCommand,
+        'create': formatCreateCommand,
+        'execute': command => command
+    };
+
+    return commandFormatMap[commandType](command, metaDefinition);
+};
+
+const formatUpdateCommand = (command, metaDefinition) => ({
+    'command': command.command,
+    'oid': command.oid,
+    'attributes': getKnownAttributes(command, metaDefinition)
+});
+
+const formatCreateCommand = (command, metaDefinition) => ({
+    'command': command.command,
+    'assetType': command.assetType,
+    'attributes': getKnownAttributes(command, metaDefinition)
+});
+
+const getKnownAttributes = (command, metaDefinition) => {
+    const knownAttributes = {};
+    for(var attribute in (command.attributes || [])) {
+        const AssetAttribute = `${metaDefinition.Token}.${attribute}`;
+        if(metaDefinition.Attributes[AssetAttribute]) {
+            knownAttributes[attribute] = command.attributes[attribute];
+        } else {
+            console.log("========>", "drop unknown attribute", AssetAttribute);
+        }
+    }
+    return knownAttributes;
+};
+
+const shouldNotDropOperation = (command, metaDefinitions) => {
+    const metaDefinition = getMetaDefinitionFrom(command, metaDefinitions);
+    const AssetOperation = `${metaDefinition.Token}.${command.operation}`;
+    const shouldNotDrop = metaDefinition.Operations[AssetOperation];
+    if(!shouldNotDrop){
+        console.log("========>", "drop unknown operation", AssetOperation);
+    }
+    return shouldNotDrop;
 };
