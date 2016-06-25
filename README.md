@@ -27,7 +27,7 @@ git clone git@github.com:versionone/spigot.git
 ## Developing
 Local build
 
-```
+```sh
 #Install dependencies
 npm install
 
@@ -153,7 +153,7 @@ spigot --url <url> --username <username> --password <password> --throttle <event
 ```
 
 ### Referencing an oid
-Use {{`<assettype>`}} example: {{Story}} or {{Task}}
+Use `{{<assettype>}}` example: `{{Story}}` or `{{Task}}`
 ```json
 {
     "commands": [{
@@ -174,7 +174,7 @@ Use {{`<assettype>`}} example: {{Story}} or {{Task}}
 }
 ```
 
-Use {{`<asset name>`}} example: {{Story 1}} or {{A Specific Story}}
+Use `{{<asset name>}}` example: `{{Story 1}}` or `{{A Specific Story}}`
 ```json
 {
     "commands": [{
