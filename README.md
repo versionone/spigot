@@ -107,6 +107,7 @@ spigot --url <url> --username <username> --password <password> --throttle <event
 {
     "commands": [{
         "command": "update",
+        "assetType": "Story",
         "oid": "Story:1005",
         "attributes": {
             "Name": "Renamed Story"
@@ -129,6 +130,7 @@ spigot --url <url> --username <username> --password <password> --throttle <event
         },
         {
             "command": "update",
+            "assetType": "Story",
             "oid": "{{Story}}",
             "attributes": {
                 "Owners":{
@@ -138,6 +140,7 @@ spigot --url <url> --username <username> --password <password> --throttle <event
         },
         {
             "command": "update",
+            "assetType": "Story",
             "oid": "{{Story}}",
             "attributes": {
                 "Owners":{
@@ -204,6 +207,7 @@ Use {{`<asset name>`}} example: {{Story 1}} or {{A Specific Story}}
 {
     "commands": [{
         "command": "execute",
+        "assetType": "Story",
         "oid": "Story:1005",
         "operation": "Inactivate"
     }]

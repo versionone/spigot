@@ -13,6 +13,7 @@
         },
         {
             "command": "update",
+            "assetType": "Story",
             "oid": "{{Story}}",
             "attributes": {
                 "Owners":{
@@ -22,6 +23,7 @@
         },
         {
             "command": "update",
+            "assetType": "Story",
             "oid": "{{Story}}",
             "attributes": {
                 "Owners":{

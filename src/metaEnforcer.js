@@ -1,25 +1,12 @@
 import V1 from './v1'
-import Oid from 'v1sdk/dist/Oid';
 
-const getMetaDefinitionFrom = (command, metaDefinitions) => {
-    const assetType = getAssetType(command);
-    return metaDefinitions.find(metaDef => metaDef.Token === assetType);
-};
-
-const getAssetType = command => {
-    const map = {
-        'create': command => command.assetType,
-        'update': command => new Oid(command.oid).type,
-        'execute': command => new Oid(command.oid).type
-    };
-    return map[command.command](command);
-};
+const getMetaDefinitionFrom = (command, metaDefinitions) => metaDefinitions.find(metaDef => metaDef.Token === command.assetType);
 
 const getAssetTypes = data => {
     return []
         .concat
         .apply([], data.map(intent => intent.commands))
-        .map(command => getAssetType(command))
+        .map(command => command.assetType)
         .sort()
         .filter((value, index, array) => (index === 0) || (value !== array[index-1]));
 };
@@ -45,6 +32,7 @@ const getKnownAttributes = (command, metaDefinition) => {
 
 const formatUpdateCommand = (command, metaDefinition) => ({
     'command': command.command,
+    'assetType': command.assetType,
     'oid': command.oid,
     'attributes': getKnownAttributes(command, metaDefinition)
 });

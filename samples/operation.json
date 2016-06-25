@@ -4,6 +4,7 @@
 
     "commands": [{
         "command": "execute",
+        "assetType": "Story",
         "oid": "Story:1005",
         "operation": "Inactivate"
     }]

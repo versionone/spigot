@@ -4,6 +4,7 @@
 
     "commands": [{
         "command": "update",
+        "assetType": "Story",
         "oid": "Story:1005",
         "attributes": {
             "Name": "Renamed Story"

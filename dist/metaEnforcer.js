@@ -1,46 +1,26 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _v = require('./v1');
+var _v = require("./v1");
 
 var _v2 = _interopRequireDefault(_v);
-
-var _Oid = require('v1sdk/dist/Oid');
-
-var _Oid2 = _interopRequireDefault(_Oid);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var getMetaDefinitionFrom = function getMetaDefinitionFrom(command, metaDefinitions) {
-    var assetType = getAssetType(command);
     return metaDefinitions.find(function (metaDef) {
-        return metaDef.Token === assetType;
+        return metaDef.Token === command.assetType;
     });
-};
-
-var getAssetType = function getAssetType(command) {
-    var map = {
-        'create': function create(command) {
-            return command.assetType;
-        },
-        'update': function update(command) {
-            return new _Oid2.default(command.oid).type;
-        },
-        'execute': function execute(command) {
-            return new _Oid2.default(command.oid).type;
-        }
-    };
-    return map[command.command](command);
 };
 
 var getAssetTypes = function getAssetTypes(data) {
     return [].concat.apply([], data.map(function (intent) {
         return intent.commands;
     })).map(function (command) {
-        return getAssetType(command);
+        return command.assetType;
     }).sort().filter(function (value, index, array) {
         return index === 0 || value !== array[index - 1];
     });
@@ -57,7 +37,7 @@ var getMetaDefinitions = function getMetaDefinitions(v1, sampleData) {
 var getKnownAttributes = function getKnownAttributes(command, metaDefinition) {
     var knownAttributes = {};
     for (var attribute in command.attributes || []) {
-        var AssetAttribute = metaDefinition.Token + '.' + attribute;
+        var AssetAttribute = metaDefinition.Token + "." + attribute;
         if (metaDefinition.Attributes[AssetAttribute]) {
             knownAttributes[attribute] = command.attributes[attribute];
         } else {
@@ -70,6 +50,7 @@ var getKnownAttributes = function getKnownAttributes(command, metaDefinition) {
 var formatUpdateCommand = function formatUpdateCommand(command, metaDefinition) {
     return {
         'command': command.command,
+        'assetType': command.assetType,
         'oid': command.oid,
         'attributes': getKnownAttributes(command, metaDefinition)
     };
@@ -85,7 +66,7 @@ var formatCreateCommand = function formatCreateCommand(command, metaDefinition) 
 
 var shouldNotDropOperation = function shouldNotDropOperation(command, metaDefinitions) {
     var metaDefinition = getMetaDefinitionFrom(command, metaDefinitions);
-    var AssetOperation = metaDefinition.Token + '.' + command.operation;
+    var AssetOperation = metaDefinition.Token + "." + command.operation;
     var shouldNotDrop = metaDefinition.Operations[AssetOperation];
     if (!shouldNotDrop) {
         console.log("========>", "drop unknown operation", AssetOperation);

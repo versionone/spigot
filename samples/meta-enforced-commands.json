@@ -14,7 +14,8 @@
         },
         {
             "command": "update",
-            "oid": "Story:1003",
+            "assetType": "Story",
+            "oid": "{{Story 1}}",
             "attributes": {
                 "Name": "Rename Story 1",
                 "Scope": "Scope:0",
@@ -23,12 +24,14 @@
         },
         {
             "command": "execute",
-            "oid": "Story:1003",
+            "assetType": "Story",
+            "oid": "{{Story 1}}",
             "operation": "Unknown Operation"
         },
         {
             "command": "execute",
-            "oid": "Story:1003",
+            "assetType": "Story",
+            "oid": "{{Story 1}}",
             "operation": "Inactivate"
         }
     ]
