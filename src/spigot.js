@@ -45,16 +45,17 @@ export default class Spigot {
                     .then(results => {
                         const assets = Array.isArray(results) ? results : [results];
                         assets.forEach((asset, i) => {
-                            const newStreamVariables = [];
-                            if (asset && asset.name && i)
-                                newStreamVariables.push(`${asset.name} ${i}`);
-                            if (asset && asset.name)
-                                newStreamVariables.push(asset.name);
-                            if (asset && asset.assetType)
-                                newStreamVariables.push(asset.type);
-                            newStreamVariables.forEach(variable => {
-                                this.streamVariables[variable] = asset.oid;
-                            });
+                            if(asset) {
+                                const oid = asset.id.split(':', 2).join(':');
+                                if (asset.Attributes && asset.Attributes && asset.Attributes.Name) {
+                                    const name = i ? `${asset.Attributes.Name.value} ${i}` : `${asset.Attributes.Name.value}`;
+                                    this.streamVariables[name] = oid;
+                                }
+                                if (asset.href) {
+                                    const type = asset.href.split('rest-1.v1/Data')[1].split('/')[1];
+                                    this.streamVariables[type] = oid;
+                                }
+                            }
                             callback(null, asset);
                         });
                     })

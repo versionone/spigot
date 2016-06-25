@@ -90,13 +90,17 @@ var Spigot = function Spigot(_ref) {
             _this.commands[c.command](v1, c).then(function (results) {
                 var assets = Array.isArray(results) ? results : [results];
                 assets.forEach(function (asset, i) {
-                    var newStreamVariables = [];
-                    if (asset && asset.name && i) newStreamVariables.push(asset.name + ' ' + i);
-                    if (asset && asset.name) newStreamVariables.push(asset.name);
-                    if (asset && asset.assetType) newStreamVariables.push(asset.type);
-                    newStreamVariables.forEach(function (variable) {
-                        _this.streamVariables[variable] = asset.oid;
-                    });
+                    if (asset) {
+                        var oid = asset.id.split(':', 2).join(':');
+                        if (asset.Attributes && asset.Attributes && asset.Attributes.Name) {
+                            var name = i ? asset.Attributes.Name.value + ' ' + i : '' + asset.Attributes.Name.value;
+                            _this.streamVariables[name] = oid;
+                        }
+                        if (asset.href) {
+                            var type = asset.href.split('rest-1.v1/Data')[1].split('/')[1];
+                            _this.streamVariables[type] = oid;
+                        }
+                    }
                     callback(null, asset);
                 });
             }).catch(function (error) {
