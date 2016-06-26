@@ -12,7 +12,9 @@ export default (cmdArgs, data) => {
         parallel
     } = cmdArgs;
 
-    const v1Url = url || 'http://localhost/VersionOne.Web/';
+    var formattedUrl = url.slice(-1) === '/' ? url.substring(0, url.length - 1) : url;
+    const v1Url = formattedUrl || 'http://localhost/VersionOne.Web';
+
     const spigot = new Spigot({
         url: v1Url,
         username: username,
