@@ -87,7 +87,7 @@ export default class Spigot {
         };
 
         this.wrapForExecution = data => {
-            const url = data.url || this.url;
+            const url = this.url;
             const username = data.username || this.username;
             const password = data.password || this.password;
             const executableCommands = data.commands.map(command => () => {
