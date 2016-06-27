@@ -12,11 +12,11 @@ export default (cmdArgs, data) => {
         parallel
     } = cmdArgs;
 
-    var formattedUrl = url.slice(-1) === '/' ? url.substring(0, url.length - 1) : url;
-    const v1Url = formattedUrl || 'http://localhost/VersionOne.Web';
+    let v1Url = formattedUrl || 'http://localhost/VersionOne.Web';
+    const formattedUrl = v1Url.slice(-1) === '/' ? v1Url.substring(0, v1Url.length - 1) : v1Url;
 
     const spigot = new Spigot({
-        url: v1Url,
+        url: formattedUrl,
         username: username,
         password: password,
         throttle: throttle,
@@ -24,7 +24,7 @@ export default (cmdArgs, data) => {
         forever: forever
     });
 
-    MetaEnforcer(v1Url, data)
+    MetaEnforcer(formattedUrl, data)
         .then(function(transformedData, err) {
             if (parallel) {
                 console.log('Executing in a parallel');

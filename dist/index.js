@@ -24,7 +24,9 @@ exports.default = function (cmdArgs, data) {
     var parallel = cmdArgs.parallel;
 
 
-    var v1Url = url || 'http://localhost/VersionOne.Web/';
+    var formattedUrl = url.slice(-1) === '/' ? url.substring(0, url.length - 1) : url;
+    var v1Url = formattedUrl || 'http://localhost/VersionOne.Web';
+
     var spigot = new _spigot2.default({
         url: v1Url,
         username: username,
