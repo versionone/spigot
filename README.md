@@ -131,9 +131,11 @@ spigot --url <url> --username <username> --password <password> --throttle <event
             "assetType": "Story",
             "oid": "{{Story}}",
             "attributes": {
-                "Owners":{
-                    "add": ["Member:20", "Member:1133", "Member:1134"]
-                }
+                "Owners": [
+                    "Member:20",
+                    "Member:1133",
+                    "Member:1134"
+                ]
             }
         },
         {
@@ -141,9 +143,9 @@ spigot --url <url> --username <username> --password <password> --throttle <event
             "assetType": "Story",
             "oid": "{{Story}}",
             "attributes": {
-                "Owners":{
-                    "remove": ["Member:1133"]
-                }
+                "Owners": [
+                    { "idref": "Member:1133", "act": "remove" }
+                 ]
             }
         }
     ]

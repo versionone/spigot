@@ -26,9 +26,9 @@
             "assetType": "Story",
             "oid": "{{Story}}",
             "attributes": {
-                "Owners":{
-                    "remove": ["Member:1133"]
-                }
+                "Owners": [
+                    { "idref": "Member:1133", "act": "remove" }
+                ]
             }
         }
     ]
