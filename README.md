@@ -89,14 +89,12 @@ spigot --url <url> --username <username> --password <password> --throttle <event
         "assetType": "Bundle",
         "attributes": {
             "Name": "Story 1",
-            "Workitems": {
-                "add": [
-                    "{{StoryName 1}}",
-                    "{{StoryName 2}}",
-                    "{{StoryName 3}}"
-                    "{{StoryName 4}}"
-                ]
-            }
+            "Workitems":  [
+                "{{StoryName 1}}",
+                "{{StoryName 2}}",
+                "{{StoryName 3}}"
+                "{{StoryName 4}}"
+            ]
         }
     }]
 }

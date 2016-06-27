@@ -16,9 +16,9 @@
             "assetType": "Story",
             "oid": "{{Story}}",
             "attributes": {
-                "Owners":{
-                    "add": ["Member:20", "Member:1133", "Member:1134"]
-                }
+                "Owners": [
+                    "Member:20", "Member:1133", "Member:1134"
+                ]
             }
         },
         {
