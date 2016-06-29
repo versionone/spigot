@@ -48,7 +48,7 @@ export default class Spigot {
                             if(asset) {
                                 const oid = asset.id.split(':', 2).join(':');
                                 if (asset.Attributes && asset.Attributes && asset.Attributes.Name) {
-                                    const name = assets.length > 1  ? `${asset.Attributes.Name.value} ${i + 1}` : `${asset.Attributes.Name.value}`;
+                                    const name = assets.length > 1  ? `${asset.Attributes.Name.value}${i + 1}` : `${asset.Attributes.Name.value}`;
                                     this.streamVariables[name] = oid;
                                 }
                                 if (asset.href) {

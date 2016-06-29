@@ -93,7 +93,7 @@ var Spigot = function Spigot(_ref) {
                     if (asset) {
                         var oid = asset.id.split(':', 2).join(':');
                         if (asset.Attributes && asset.Attributes && asset.Attributes.Name) {
-                            var name = assets.length > 1 ? asset.Attributes.Name.value + ' ' + (i + 1) : '' + asset.Attributes.Name.value;
+                            var name = assets.length > 1 ? '' + asset.Attributes.Name.value + (i + 1) : '' + asset.Attributes.Name.value;
                             _this.streamVariables[name] = oid;
                         }
                         if (asset.href) {
