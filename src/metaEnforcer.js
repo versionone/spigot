@@ -33,6 +33,7 @@ const getKnownAttributes = (command, metaDefinition) => {
 const formatUpdateCommand = (command, metaDefinition) => ({
     'command': command.command,
     'assetType': command.assetType,
+    'times': command.times,
     'oid': command.oid,
     'attributes': getKnownAttributes(command, metaDefinition)
 });
@@ -40,6 +41,7 @@ const formatUpdateCommand = (command, metaDefinition) => ({
 const formatCreateCommand = (command, metaDefinition) => ({
     'command': command.command,
     'assetType': command.assetType,
+    'times': command.times,
     'attributes': getKnownAttributes(command, metaDefinition)
 });
 

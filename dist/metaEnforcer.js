@@ -51,6 +51,7 @@ var formatUpdateCommand = function formatUpdateCommand(command, metaDefinition) 
     return {
         'command': command.command,
         'assetType': command.assetType,
+        'times': command.times,
         'oid': command.oid,
         'attributes': getKnownAttributes(command, metaDefinition)
     };
@@ -60,6 +61,7 @@ var formatCreateCommand = function formatCreateCommand(command, metaDefinition) 
     return {
         'command': command.command,
         'assetType': command.assetType,
+        'times': command.times,
         'attributes': getKnownAttributes(command, metaDefinition)
     };
 };

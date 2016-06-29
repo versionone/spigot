@@ -93,7 +93,7 @@ var Spigot = function Spigot(_ref) {
                     if (asset) {
                         var oid = asset.id.split(':', 2).join(':');
                         if (asset.Attributes && asset.Attributes && asset.Attributes.Name) {
-                            var name = i ? asset.Attributes.Name.value + ' ' + i : '' + asset.Attributes.Name.value;
+                            var name = assets.length > 1 ? asset.Attributes.Name.value + ' ' + (i + 1) : '' + asset.Attributes.Name.value;
                             _this.streamVariables[name] = oid;
                         }
                         if (asset.href) {
@@ -131,7 +131,7 @@ var Spigot = function Spigot(_ref) {
     };
 
     this.wrapForExecution = function (data) {
-        var url = data.url || _this.url;
+        var url = _this.url;
         var username = data.username || _this.username;
         var password = data.password || _this.password;
         var executableCommands = data.commands.map(function (command) {

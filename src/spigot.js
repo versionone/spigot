@@ -48,7 +48,7 @@ export default class Spigot {
                             if(asset) {
                                 const oid = asset.id.split(':', 2).join(':');
                                 if (asset.Attributes && asset.Attributes && asset.Attributes.Name) {
-                                    const name = i ? `${asset.Attributes.Name.value} ${i}` : `${asset.Attributes.Name.value}`;
+                                    const name = assets.length > 1  ? `${asset.Attributes.Name.value} ${i + 1}` : `${asset.Attributes.Name.value}`;
                                     this.streamVariables[name] = oid;
                                 }
                                 if (asset.href) {
@@ -131,7 +131,7 @@ export default class Spigot {
 const create = (v1, command) => {
     const { assetType, attributes, times } = command;
     const Times = Array.apply(null, { length: (times || 1) }).map(Number.call, Number);
-    return Promise.all(Times.map(() => v1.create(assetType, attributes)));
+    return Promise.all(Times.map(() =>  v1.create(assetType, attributes)));
 };
 
 const update = (v1, command) => {
