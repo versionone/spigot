@@ -21,7 +21,7 @@ var shortHands = {
 
 var parsed = nopt(knownOpts, shortHands, process.argv, 2);
 
-if(parsed.url) {
+if(!parsed.url) {
     console.log("Url of VersionOne instance is required and was not supplied. I will continue running by using http://localhost/VersionOne.Web")
 }
 
